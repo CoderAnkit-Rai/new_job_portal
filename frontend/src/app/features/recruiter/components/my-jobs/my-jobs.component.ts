@@ -55,25 +55,7 @@ export class MyJobsComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  exportCSV() {
-    const headers = ['Job Title', 'Company', 'Location', 'Salary', 'Status'];
-    const rows = this.jobs.map((j: any) => [
-      '"' + (j.title || '') + '"',
-      '"' + (j.company || '') + '"',
-      '"' + (j.location || '') + '"',
-      j.salary ? j.salary : '',
-      '"' + (j.status || '') + '"'
-    ]);
-    const csv = [headers.join(','), ...rows.map((r: any) => r.join(','))].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'my-jobs.csv';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
+  
   closeJob(jobId: number) {
     this.recruiterJobService.closeJob(jobId).subscribe({
       next: () => {

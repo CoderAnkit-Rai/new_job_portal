@@ -1,52 +1,26 @@
 package com.capg.applicationservice.config;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.core.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RabbitMQConfigTest {
 
     private final RabbitMQConfig config = new RabbitMQConfig();
 
-    @Test
-    void exchange_isNotNull() {
-        assertNotNull(config.jobportalExchange());
+    @Test void exchangeIsTopicExchange() {
+        assertTrue(config.jobportalExchange() instanceof TopicExchange);
         assertEquals(RabbitMQConfig.EXCHANGE, config.jobportalExchange().getName());
     }
 
-    @Test
-    void deadLetterExchange_isNotNull() {
-        assertNotNull(config.deadLetterExchange());
-        assertEquals(RabbitMQConfig.DLX, config.deadLetterExchange().getName());
+    @Test void notifyQueueIsDurable() {
+        Queue q = config.jobAppliedNotifyQueue();
+        assertEquals("job.applied.notify.queue", q.getName());
+        assertTrue(q.isDurable());
     }
 
-    @Test
-    void queues_areNotNull() {
-        assertNotNull(config.jobAppliedAnalyticsQueue());
-        assertNotNull(config.jobAppliedNotifyQueue());
-    }
-
-    @Test
-    void dlqs_areNotNull() {
-        assertNotNull(config.jobAppliedAnalyticsDlq());
-        assertNotNull(config.jobAppliedNotifyDlq());
-    }
-
-    @Test
-    void bindings_areNotNull() {
-        assertNotNull(config.jobAppliedAnalyticsBinding());
-        assertNotNull(config.jobAppliedNotifyBinding());
-    }
-
-    @Test
-    void dlqBindings_areNotNull() {
-        assertNotNull(config.jobAppliedAnalyticsDlqBinding());
-        assertNotNull(config.jobAppliedNotifyDlqBinding());
-    }
-
-    @Test
-    void messageConverter_isNotNull() {
-        Jackson2JsonMessageConverter converter = config.messageConverter();
-        assertNotNull(converter);
+    @Test void notifyBindingUsesCorrectKey() {
+        Binding b = config.jobAppliedNotifyBinding();
+        assertEquals(RabbitMQConfig.JOB_APPLIED_KEY, b.getRoutingKey());
     }
 }

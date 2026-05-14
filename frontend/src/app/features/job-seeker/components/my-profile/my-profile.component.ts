@@ -19,7 +19,7 @@ import { ConfirmModalComponent } from '../../../../shared/components/confirm-mod
   <!-- Toast -->
   <div *ngIf="toastMessage" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white border border-green-200 shadow-xl rounded-2xl px-6 py-4 flex items-center gap-4 min-w-80">
     <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xl shrink-0">✅</div>
-    <div>
+    <div> 
       <p class="font-semibold text-gray-900 text-sm">{{ toastMessage }}</p>
       <p class="text-xs text-gray-400 mt-0.5">{{ toastSub }}</p>
     </div>
@@ -35,7 +35,7 @@ import { ConfirmModalComponent } from '../../../../shared/components/confirm-mod
       </div>
       <div>
         <h1 class="text-2xl font-bold text-gray-900">{{ profile?.name || email }}</h1>
-        <p class="text-sm text-gray-400">{{ email }}</p>
+        <p class="text-sm text-gray-400">{{ email }}</p> 
         <span class="text-xs bg-blue-100 text-blue-700 font-semibold px-2.5 py-0.5 rounded-full mt-1 inline-block">{{ role }}</span>
       </div>
     </div>
@@ -46,26 +46,6 @@ import { ConfirmModalComponent } from '../../../../shared/components/confirm-mod
 
     <div *ngIf="!loading" class="space-y-5">
 
-      <!-- Profile Completeness -->
-      <div class="bg-white rounded-xl border border-gray-100 p-6">
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="font-bold text-gray-900">Profile Completeness</h2>
-          <span [class]="completeness.score === 100 ? 'text-green-600 font-bold text-sm' : 'text-blue-600 font-bold text-sm'">{{ completeness.score }}%</span>
-        </div>
-        <div class="w-full bg-gray-100 rounded-full h-2.5 mb-3">
-          <div class="h-2.5 rounded-full transition-all duration-500"
-            [style.width.%]="completeness.score"
-            [class]="completeness.score === 100 ? 'bg-green-500' : completeness.score >= 50 ? 'bg-blue-600' : 'bg-yellow-500'">
-          </div>
-        </div>
-        <div *ngIf="completeness.missing.length > 0" class="flex flex-wrap gap-2">
-          <span *ngFor="let item of completeness.missing"
-            class="text-xs bg-yellow-50 border border-yellow-200 text-yellow-700 px-3 py-1 rounded-full flex items-center gap-1">
-            ⚠️ {{ item }}
-          </span>
-        </div>
-        <p *ngIf="completeness.score === 100" class="text-sm text-green-600 font-medium">Your profile is complete!</p>
-      </div>
       <div class="bg-white rounded-xl border border-gray-100 p-6">
         <h2 class="font-bold text-gray-900 mb-5">Personal Information</h2>
         <div class="space-y-4">
@@ -81,7 +61,7 @@ import { ConfirmModalComponent } from '../../../../shared/components/confirm-mod
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-600 mb-1">Email Address</label>
-            <input [value]="email" type="text" disabled
+            <input [value]="email" type="text" disabled 
               class="w-full border border-gray-100 bg-gray-50 rounded-lg px-3 py-2.5 text-sm text-gray-400 cursor-not-allowed" />
             <p class="text-xs text-gray-400 mt-1">Email cannot be changed</p>
           </div>
@@ -119,7 +99,7 @@ import { ConfirmModalComponent } from '../../../../shared/components/confirm-mod
           class="mt-4 bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition disabled:opacity-50">
           Save Skills
         </button>
-      </div>
+      </div> 
 
       <!-- Quick Links -->
       <div class="bg-white rounded-xl border border-gray-100 p-6">
@@ -209,17 +189,6 @@ export class MyProfileComponent implements OnInit {
   get role() { return this.authService.getRole() || ''; }
   get initials() { return this.email ? this.email.substring(0, 2).toUpperCase() : 'U'; }
 
-  get completeness(): { score: number; missing: string[] } {
-    const checks = [
-      { label: 'Full name', done: !!this.name.trim() },
-      { label: 'About Me', done: !!this.headline.trim() },
-      { label: 'Skills', done: this.skillList.length > 0 },
-      { label: 'Resume uploaded', done: this.resumes.length > 0 },
-    ];
-    const done = checks.filter(c => c.done).length;
-    return { score: Math.round((done / checks.length) * 100), missing: checks.filter(c => !c.done).map(c => c.label) };
-  }
-
   ngOnInit() {
     this.resumeService.getProfile().subscribe({
       next: (res) => {
@@ -240,7 +209,7 @@ export class MyProfileComponent implements OnInit {
     });
   }
 
-  saveProfile() {
+  saveProfile() { 
     if (!this.profile || !this.name.trim()) return;
     this.saving = true;
     this.resumeService.updateProfile(this.profile.id, {
@@ -260,7 +229,7 @@ export class MyProfileComponent implements OnInit {
 
   addSkill() {
     const s = this.skillInput.trim();
-    if (!s || this.skillList.includes(s)) return;
+    if (!s || this.skillList.includes(s)) return; 
     this.skillList = [...this.skillList, s];
     this.skillInput = '';
     this.skillsDirty = true;
@@ -269,7 +238,7 @@ export class MyProfileComponent implements OnInit {
 
   removeSkill(skill: string) {
     this.skillList = this.skillList.filter(s => s !== skill);
-    this.skillsDirty = true;
+    this.skillsDirty = true; 
     this.cdr.detectChanges();
   }
 

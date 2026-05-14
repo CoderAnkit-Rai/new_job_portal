@@ -27,16 +27,13 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
     <div class="flex items-start justify-between mb-6">
       <div>
         <h1 class="text-2xl font-bold text-gray-900">Applicants Management</h1>
-        <p class="text-sm text-gray-500 mt-1">{{ jobId ? 'Review and manage candidates for Job #' + jobId : 'All applicants across your job postings' }}</p>
+        <p class="text-sm text-gray-500 mt-1">{{ jobId ? 'Review and manage candidates for Job #' + jobId : 'All applicants across your job postings' }}</p> 
       </div>
       <div class="flex gap-3">
-        <button (click)="exportCsv()" class="border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2">
-          Export CSV
-        </button>
-        <div class="bg-white border border-gray-200 rounded-xl px-5 py-3 text-center">
+        <div class="bg-white border border-gray-200 rounded-xl px-5 py-3 text-center"> 
           <p class="text-2xl font-bold text-blue-700">{{ totalElements }}</p>
           <p class="text-xs text-gray-500 uppercase tracking-wide">Total</p>
-        </div>
+        </div> 
         <div class="bg-white border border-gray-200 rounded-xl px-5 py-3 text-center">
           <p class="text-2xl font-bold text-yellow-600">{{ shortlistedCount }}</p>
           <p class="text-xs text-gray-500 uppercase tracking-wide">Shortlisted</p>
@@ -44,13 +41,13 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
       </div>
     </div>
 
-    <!-- Filters -->
+    <!-- Filters --> 
     <div class="bg-white rounded-xl border border-gray-100 p-4 mb-5 flex gap-3">
-      <div class="flex-1 flex items-center border border-gray-200 rounded-lg px-3 py-2 gap-2">
-        <span class="text-gray-400">🔍</span>
+      <div class="flex-1 flex items-center border border-gray-200 rounded-lg px-3 py-2 gap-2"> 
+        <span class="text-gray-400">🔍</span> 
         <input [(ngModel)]="searchTerm" type="text" placeholder="Search applicants..."
           class="text-sm outline-none w-full" />
-      </div>
+      </div> 
       <select [(ngModel)]="statusFilter" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none">
         <option value="">All Statuses</option>
         <option value="APPLIED">Applied</option>
@@ -68,14 +65,14 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
     <!-- Table -->
     <div *ngIf="!loading" class="bg-white rounded-xl border border-gray-100 overflow-hidden">
       <table class="w-full">
-        <thead class="bg-gray-50 border-b border-gray-100">
+        <thead class="bg-gray-50 border-b border-gray-100"> 
           <tr>
             <th class="text-left text-xs font-semibold text-gray-500 uppercase px-5 py-3">Candidate</th>
             <th *ngIf="!jobId" class="text-left text-xs font-semibold text-gray-500 uppercase px-5 py-3">Job</th>
             <th class="text-left text-xs font-semibold text-gray-500 uppercase px-5 py-3">Applied Date</th>
             <th class="text-left text-xs font-semibold text-gray-500 uppercase px-5 py-3">Status</th>
             <th class="text-left text-xs font-semibold text-gray-500 uppercase px-5 py-3">Actions</th>
-          </tr>
+          </tr> 
         </thead>
         <tbody class="divide-y divide-gray-50">
           <tr *ngFor="let app of filteredApplications" class="hover:bg-gray-50 transition cursor-pointer" (click)="openDetail(app)">
@@ -89,15 +86,15 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
                   <p class="text-xs text-gray-400">Application #{{ app.applicationId?.substring(0,8) }}</p>
                 </div>
               </div>
-            </td>
+            </td> 
             <td *ngIf="!jobId" class="px-5 py-4">
               <p class="text-sm font-medium text-gray-800">{{ app.jobTitle || 'Job #' + app.jobId }}</p>
-              <p class="text-xs text-gray-400">{{ app.jobCompany }}</p>
+              <p class="text-xs text-gray-400">{{ app.jobCompany }}</p>  
             </td>
             <td class="px-5 py-4 text-sm text-gray-500">{{ app.appliedAt | date:'MMM dd, yyyy' }}</td>
             <td class="px-5 py-4">
               <span [class]="getStatusClass(app.status) + ' text-xs font-semibold px-3 py-1 rounded-full'">
-                {{ getStatusLabel(app.status) }}
+                {{ getStatusLabel(app.status) }} 
               </span>
             </td>
             <td class="px-5 py-4">
@@ -111,11 +108,11 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> 
 
       <!-- Empty -->
-      <div *ngIf="filteredApplications.length === 0" class="text-center py-12 text-gray-400">
-        <div class="text-4xl mb-3">👥</div>
+      <div *ngIf="filteredApplications.length === 0" class="text-center py-12 text-gray-400"> 
+        <div class="text-4xl mb-3">👥</div> 
         <p class="font-medium">No applicants yet</p>
         <p class="text-sm mt-1">Applicants will appear here once they apply</p>
       </div>
@@ -146,7 +143,7 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
   <div class="absolute inset-0 bg-black/30" (click)="closeDetail()"></div>
   <!-- Panel -->
   <div class="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col overflow-y-auto">
-
+ 
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
       <h2 class="font-bold text-gray-900">Applicant Profile</h2>
@@ -187,13 +184,13 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
         <div *ngIf="applicantProfile?.mobile" class="flex justify-between text-sm">
           <span class="text-gray-500">Mobile</span>
           <span class="font-medium text-gray-800">{{ applicantProfile.mobile }}</span>
-        </div>
+        </div> 
         <div class="flex justify-between text-sm">
           <span class="text-gray-500">Application ID</span>
           <span class="font-medium text-gray-800 text-xs">#{{ selectedApplicant.applicationId?.substring(0,8) }}</span>
         </div>
       </div>
-
+ 
       <!-- Skills -->
       <div *ngIf="applicantProfile?.skills">
         <h3 class="font-semibold text-gray-900 mb-2">Skills</h3>
@@ -209,25 +206,25 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
       </div>
 
       <!-- Resumes -->
-      <div>
+      <div> 
         <h3 class="font-semibold text-gray-900 mb-3">Resumes</h3>
         <div *ngIf="applicantResumes.length === 0" class="text-sm text-gray-400 text-center py-4 bg-gray-50 rounded-xl">
-          No resumes uploaded
+          No resumes uploaded 
         </div>
         <div *ngFor="let r of applicantResumes" class="flex items-center justify-between p-3 bg-gray-50 rounded-xl mb-2">
-          <div class="flex items-center gap-3">
-            <span class="text-red-500 text-xl">&#128196;</span>
-            <div>
+          <div class="flex items-center gap-3"> 
+            <span class="text-red-500 text-xl">&#128196;</span> 
+            <div> 
               <p class="text-sm font-medium text-gray-800">{{ r.fileUrl?.split('/')?.pop() || 'Resume' }}</p>
               <p class="text-xs text-gray-400">{{ r.uploadedAt | date:'MMM dd, yyyy' }}</p>
-            </div>
-          </div>
+            </div> 
+          </div> 
           <a [href]="getDownloadUrl(r.fileUrl)" target="_blank"
             class="text-blue-600 text-sm font-medium hover:underline">View</a>
-        </div>
+        </div> 
       </div>
 
-      <!-- Update Status -->
+      <!-- Update Status --> 
       <div>
         <h3 class="font-semibold text-gray-900 mb-3">Update Status</h3>
         <select (change)="updateStatus(selectedApplicant.applicationId, $event)"
@@ -236,7 +233,7 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
           <option value="SHORTLISTED" [selected]="selectedApplicant.status === 'SHORTLISTED'">Shortlisted</option>
           <option value="INTERVIEW_SCHEDULED" [selected]="selectedApplicant.status === 'INTERVIEW_SCHEDULED'">Interview Scheduled</option>
           <option value="REJECTED" [selected]="selectedApplicant.status === 'REJECTED'">Rejected</option>
-        </select>
+        </select> 
       </div>
 
     </div>
@@ -244,7 +241,7 @@ import { RecruiterJobService } from '../../services/recruiter-job.service';
 </div>
   `
 })
-export class ApplicantsComponent implements OnInit {
+export class ApplicantsComponent implements OnInit { 
 
   applications: any[] = [];
   loading = true;
@@ -345,6 +342,9 @@ export class ApplicantsComponent implements OnInit {
         this.applications = this.applications.map(a =>
           a.applicationId === applicationId ? { ...a, status: res.status || status } : a
         );
+        if (this.selectedApplicant?.applicationId === applicationId) {
+          this.selectedApplicant = { ...this.selectedApplicant, status: res.status || status };
+        }
         this.totalElements = this.applications.length;
         this.cdr.detectChanges();
       },
@@ -386,6 +386,7 @@ export class ApplicantsComponent implements OnInit {
     this.applicantResumes = [];
     this.applicantProfile = null;
     this.detailLoading = true;
+    this.cdr.detectChanges();
     let pending = 2;
     const done = () => { if (--pending === 0) { this.detailLoading = false; this.cdr.detectChanges(); } };
     this.applicantService.getResumesByEmail(app.userEmail).subscribe({
@@ -409,18 +410,4 @@ export class ApplicantsComponent implements OnInit {
     return Array.from({ length: Math.min(this.totalPages, 5) }, (_, i) => i);
   }
 
-  exportCsv() {
-    const rows = [['Candidate', 'Job', 'Applied Date', 'Status']]
-      .concat(this.filteredApplications.map((a: any) => [
-        a.userEmail,
-        a.jobTitle || 'Job #' + a.jobId,
-        a.appliedAt,
-        a.status
-      ]));
-    const csv = rows.map(r => r.join(',')).join('\n');
-    const anchor = document.createElement('a');
-    anchor.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-    anchor.download = 'applicants.csv';
-    anchor.click();
-  }
 }

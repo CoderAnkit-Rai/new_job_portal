@@ -17,14 +17,14 @@ import { environment } from '../../../../../environments/environment';
   imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent],
   template: `
 <div class="min-h-screen flex flex-col bg-gray-50">
-  <app-navbar />
+  <app-navbar /> 
   <main class="flex-1 max-w-6xl mx-auto w-full px-6 py-8">
     <div class="flex items-start justify-between mb-6">
       <div>
         <h1 class="text-2xl font-bold text-gray-900">My Applications</h1>
         <p class="text-sm text-gray-500 mt-1">Track and manage your job applications.</p>
       </div>
-      <div class="flex gap-3">
+      <div class="flex gap-3"> 
         <div class="bg-white border border-gray-200 rounded-xl px-5 py-3 text-center">
           <p class="text-2xl font-bold text-blue-700">{{ totalElements }}</p>
           <p class="text-xs text-gray-500 uppercase tracking-wide">Total Applied</p>
@@ -33,7 +33,7 @@ import { environment } from '../../../../../environments/environment';
           <p class="text-2xl font-bold text-purple-600">{{ totalInterviews }}</p>
           <p class="text-xs text-gray-500 uppercase tracking-wide">Interviews</p>
         </div>
-      </div>
+      </div> 
     </div>
 
     <div class="bg-white rounded-xl border border-gray-100 p-4 mb-5 flex gap-3">
@@ -47,7 +47,7 @@ import { environment } from '../../../../../environments/environment';
         <option *ngFor="let s of statuses">{{ s }}</option>
       </select>
     </div>
-
+ 
     <div *ngIf="loading" class="bg-white rounded-xl p-8 text-center">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700 mx-auto"></div>
     </div>
@@ -93,7 +93,7 @@ import { environment } from '../../../../../environments/environment';
 
       <div *ngIf="displayedApplications.length === 0" class="text-center py-12 text-gray-400">
         <div class="text-4xl mb-3">📋</div>
-        <p class="font-medium">No applications found</p>
+        <p class="font-medium">No applications found</p> 
         <p class="text-sm mt-1">Start applying to jobs!</p>
       </div>
 
@@ -167,7 +167,7 @@ export class MyApplicationsComponent implements OnInit {
       },
       error: () => {
         this.error = 'Failed to load applications';
-        this.loading = false;
+        this.loading = false; 
         this.cdr.detectChanges();
       }
     });

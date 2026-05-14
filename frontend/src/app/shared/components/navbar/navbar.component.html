@@ -55,21 +55,6 @@
       </a>
     </ng-container>
 
-    <ng-container *ngIf="role === 'ADMIN'">
-      <a routerLink="/admin/dashboard" routerLinkActive="text-blue-600 border-b-2 border-blue-600"
-        class="flex flex-col items-center text-gray-500 hover:text-blue-600 text-xs gap-0.5 pb-1">
-        <lucide-icon [img]="BarChart2" [size]="20"></lucide-icon> Dashboard
-      </a>
-      <a routerLink="/admin/users" routerLinkActive="text-blue-600 border-b-2 border-blue-600"
-        class="flex flex-col items-center text-gray-500 hover:text-blue-600 text-xs gap-0.5 pb-1">
-        <lucide-icon [img]="Users" [size]="20"></lucide-icon> Users
-      </a>
-      <a routerLink="/admin/jobs" routerLinkActive="text-blue-600 border-b-2 border-blue-600"
-        class="flex flex-col items-center text-gray-500 hover:text-blue-600 text-xs gap-0.5 pb-1">
-        <lucide-icon [img]="Briefcase" [size]="20"></lucide-icon> Jobs
-      </a>
-    </ng-container>
-
     <!-- Dark Mode Toggle -->
     <button (click)="toggleDark()"
       class="w-9 h-9 rounded-full flex items-center justify-center border border-gray-200 hover:bg-gray-100 transition">

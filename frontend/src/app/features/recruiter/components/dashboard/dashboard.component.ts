@@ -22,9 +22,7 @@ import { ApplicantService } from '../../services/applicant.service';
         <p class="text-sm text-gray-500  mt-1">Monitor your job postings, applicant pipeline, and key metrics.</p>
       </div>
       <div class="flex gap-3">
-        <button (click)="exportReport()" class="border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2">
-          Export Report
-        </button>
+
         <button (click)="postJob()" class="bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-800 flex items-center gap-2">
           + Post a Job
         </button>
@@ -55,7 +53,7 @@ import { ApplicantService } from '../../services/applicant.service';
         <div class="flex items-center justify-between mb-2">
           <p class="text-sm text-gray-500 ">Shortlisted</p>
           <span class="text-yellow-500 text-xl">⭐</span>
-        </div>
+        </div> 
         <p *ngIf="!loading" class="text-3xl font-bold text-gray-900 ">{{ shortlisted }}</p>
         <div *ngIf="loading" class="w-16 h-8 bg-gray-200 rounded animate-pulse mt-1"></div>
         <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">Needs Review</span>
@@ -68,7 +66,7 @@ import { ApplicantService } from '../../services/applicant.service';
         <p *ngIf="!loading" class="text-3xl font-bold text-gray-900 ">{{ interviews }}</p>
         <div *ngIf="loading" class="w-16 h-8 bg-gray-200 rounded animate-pulse mt-1"></div>
         <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">This Week</span>
-      </div>
+      </div> 
     </div>
 
     <!-- Recent Jobs -->
@@ -132,11 +130,11 @@ import { ApplicantService } from '../../services/applicant.service';
         <button (click)="postJob()" class="flex-1 bg-blue-700 text-white py-3 rounded-xl text-sm font-medium hover:bg-blue-800 transition">
           + Post a New Job
         </button>
-        <button (click)="viewMyJobs()" class="flex-1 border border-gray-200  text-gray-700  py-3 rounded-xl text-sm font-medium hover:bg-gray-50 :bg-gray-700 transition">
-          📋 My Jobs
+        <button (click)="viewMyJobs()" class="flex-1 border border-gray-200  text-gray-700  py-3 rounded-xl text-sm font-medium hover:bg-gray-50 :bg-gray-700 transition"> 
+          📋 My Jobs 
         </button>
         <button (click)="viewApplicants(0)" class="flex-1 border border-gray-200  text-gray-700  py-3 rounded-xl text-sm font-medium hover:bg-gray-50 :bg-gray-700 transition">
-          👥 All Applicants
+          👥 All Applicants 
         </button>
       </div>
     </div>
@@ -198,16 +196,6 @@ export class DashboardComponent implements OnInit {
         }
       });
     });
-  }
-
-  exportReport() {
-    const rows = [['Job Title', 'Company', 'Location', 'Status']]
-      .concat(this.jobs.map((j: any) => [j.title, j.company, j.location, j.status]));
-    const csv = rows.map(r => r.join(',')).join('\n');
-    const a = document.createElement('a');
-    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-    a.download = 'dashboard-report.csv';
-    a.click();
   }
 
   postJob() { this.router.navigate(['/recruiter/post-job']); }

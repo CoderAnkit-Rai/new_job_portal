@@ -21,20 +21,14 @@ export class RecommendedJobsComponent implements OnInit {
   loading = true;
   error = '';
   activeFilter = 'All Jobs';
-  filters = ['All Jobs', 'Remote', 'Full-time', 'Saved'];
+  filters = ['All Jobs', 'Remote', 'Full-time'];
   appliedJobIds = new Set<number>();
-  bookmarkedJobIds = new Set<number>();
   applyingJobId: number | null = null;
   sortBy = 'Newest';
   currentPage = 0;
   totalPages = 0;
   totalElements = 0;
   pageSize = 9;
-  showMoreFilters = false;
-  moreJobTypes = ['Part-time', 'Contract', 'Internship'];
-  selectedMoreJobTypes: string[] = [];
-  minSalary: number | null = null;
-  maxSalary: number | null = null;
 
   constructor(
     private jobService: JobService,
@@ -46,7 +40,6 @@ export class RecommendedJobsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadBookmarks();
     this.loadAppliedJobs();
     const filter = this.route.snapshot.queryParamMap.get('filter') || 'All Jobs';
     const page = +(this.route.snapshot.queryParamMap.get('page') || 0);
@@ -93,14 +86,6 @@ export class RecommendedJobsComponent implements OnInit {
 
   applySortAndPaginate() {
     let sorted = [...this.allJobs];
-    // apply more filters
-    if (this.selectedMoreJobTypes.length > 0) {
-      sorted = sorted.filter((j: any) =>
-        this.selectedMoreJobTypes.some(t => j.jobType?.toLowerCase() === t.toLowerCase())
-      );
-    }
-    if (this.minSalary != null) sorted = sorted.filter((j: any) => (j.salary || 0) >= this.minSalary!);
-    if (this.maxSalary != null) sorted = sorted.filter((j: any) => (j.salary || 0) <= this.maxSalary!);
     if (this.sortBy === 'Newest') {
       sorted.sort((a: any, b: any) => (b.jobId || 0) - (a.jobId || 0));
     } else if (this.sortBy === 'Salary') {
@@ -114,23 +99,6 @@ export class RecommendedJobsComponent implements OnInit {
   setFilter(filter: string) {
     this.activeFilter = filter;
     this.currentPage = 0;
-    if (filter === 'Saved') {
-      this.loading = true;
-      this.jobService.getAllOpenJobs(0, 500).subscribe({
-        next: (res) => {
-          this.ngZone.run(() => {
-            const jobs = res.content || res;
-            this.allJobs = jobs.filter((j: any) => this.bookmarkedJobIds.has(j.jobId));
-            this.totalElements = this.allJobs.length;
-            this.applySortAndPaginate();
-            this.loading = false;
-            this.cdr.detectChanges();
-          });
-        },
-        error: () => { this.loading = false; }
-      });
-      return;
-    }
     this.jobService.getAllOpenJobs(0, 500).subscribe({
       next: (res) => {
         this.ngZone.run(() => {
@@ -140,6 +108,7 @@ export class RecommendedJobsComponent implements OnInit {
           } else if (filter === 'Full-time') {
             jobs = jobs.filter((j: any) => !j.jobType || j.jobType.toLowerCase() === 'full-time');
           }
+
           this.allJobs = jobs;
           this.totalElements = jobs.length;
           this.applySortAndPaginate();
@@ -151,21 +120,8 @@ export class RecommendedJobsComponent implements OnInit {
     });
   }
 
-  toggleMoreJobType(type: string) {
-    const idx = this.selectedMoreJobTypes.indexOf(type);
-    if (idx > -1) this.selectedMoreJobTypes.splice(idx, 1); else this.selectedMoreJobTypes.push(type);
-  }
-
-  applyMoreFilters() {
-    this.currentPage = 0;
-    this.applySortAndPaginate();
-    this.cdr.detectChanges();
-  }
-
-  clearMoreFilters() {
-    this.selectedMoreJobTypes = [];
-    this.minSalary = null;
-    this.maxSalary = null;
+  onSortChange(sort: string) {
+    this.sortBy = sort;
     this.currentPage = 0;
     this.applySortAndPaginate();
     this.cdr.detectChanges();
@@ -183,29 +139,6 @@ export class RecommendedJobsComponent implements OnInit {
     const start = Math.max(0, this.currentPage - 2);
     const end = Math.min(this.totalPages, start + 5);
     return Array.from({ length: end - start }, (_, i) => start + i);
-  }
-
-  onSortChange(sort: string) {
-    this.sortBy = sort;
-    this.currentPage = 0;
-    this.applySortAndPaginate();
-    this.cdr.detectChanges();
-  }
-
-  loadBookmarks() {
-    const saved = localStorage.getItem('bookmarkedJobs');
-    this.bookmarkedJobIds = new Set(saved ? JSON.parse(saved) : []);
-  }
-
-  toggleBookmark(jobId: number) {
-    if (this.bookmarkedJobIds.has(jobId)) {
-      this.bookmarkedJobIds.delete(jobId);
-    } else {
-      this.bookmarkedJobIds.add(jobId);
-    }
-    localStorage.setItem('bookmarkedJobs', JSON.stringify([...this.bookmarkedJobIds]));
-    this.bookmarkedJobIds = new Set(this.bookmarkedJobIds);
-    this.cdr.detectChanges();
   }
 
   applyNow(jobId: number) {

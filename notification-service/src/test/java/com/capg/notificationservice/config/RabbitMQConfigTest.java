@@ -1,60 +1,29 @@
 package com.capg.notificationservice.config;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.core.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RabbitMQConfigTest {
 
     private final RabbitMQConfig config = new RabbitMQConfig();
 
-    @Test
-    void exchange_isNotNull() {
-        assertNotNull(config.jobportalExchange());
+    @Test void exchangeIsTopicExchange() {
+        assertTrue(config.jobportalExchange() instanceof TopicExchange);
         assertEquals(RabbitMQConfig.EXCHANGE, config.jobportalExchange().getName());
     }
 
-    @Test
-    void deadLetterExchange_isNotNull() {
-        assertNotNull(config.deadLetterExchange());
-        assertEquals(RabbitMQConfig.DLX, config.deadLetterExchange().getName());
+    @Test void queuesAreDurable() {
+        assertTrue(config.jobCreatedQueue().isDurable());
+        assertTrue(config.jobAppliedQueue().isDurable());
+        assertTrue(config.jobClosedQueue().isDurable());
+        assertTrue(config.resumeUploadQueue().isDurable());
     }
 
-    @Test
-    void queues_areNotNull() {
-        assertNotNull(config.jobCreatedQueue());
-        assertNotNull(config.jobAppliedQueue());
-        assertNotNull(config.jobClosedQueue());
-        assertNotNull(config.resumeUploadQueue());
-    }
-
-    @Test
-    void dlqs_areNotNull() {
-        assertNotNull(config.jobCreatedDlq());
-        assertNotNull(config.jobAppliedDlq());
-        assertNotNull(config.jobClosedDlq());
-        assertNotNull(config.resumeUploadDlq());
-    }
-
-    @Test
-    void bindings_areNotNull() {
-        assertNotNull(config.jobCreatedBinding());
-        assertNotNull(config.jobAppliedBinding());
-        assertNotNull(config.jobClosedBinding());
-        assertNotNull(config.resumeBinding());
-    }
-
-    @Test
-    void dlqBindings_areNotNull() {
-        assertNotNull(config.jobCreatedDlqBinding());
-        assertNotNull(config.jobAppliedDlqBinding());
-        assertNotNull(config.jobClosedDlqBinding());
-        assertNotNull(config.resumeUploadDlqBinding());
-    }
-
-    @Test
-    void messageConverter_isNotNull() {
-        Jackson2JsonMessageConverter converter = config.messageConverter();
-        assertNotNull(converter);
+    @Test void bindingsUseCorrectKeys() {
+        assertEquals("job.created",     config.jobCreatedBinding().getRoutingKey());
+        assertEquals("job.applied",     config.jobAppliedBinding().getRoutingKey());
+        assertEquals("job.closed",      config.jobClosedBinding().getRoutingKey());
+        assertEquals("resume.uploaded", config.resumeBinding().getRoutingKey());
     }
 }

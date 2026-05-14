@@ -18,10 +18,6 @@
             : 'bg-white border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-sm hover:bg-gray-50'">
           {{ f }}
         </button>
-        <button (click)="showMoreFilters = !showMoreFilters"
-          [class]="showMoreFilters ? 'bg-blue-50 border border-blue-300 text-blue-700 px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-1' : 'bg-white border border-gray-200 text-gray-600 px-4 py-1.5 rounded-full text-sm hover:bg-gray-50 flex items-center gap-1'">
-          ⚙️ More Filters {{ showMoreFilters ? '▲' : '▼' }}
-        </button>
       </div>
       <div class="flex items-center gap-2 text-sm text-gray-500">
         Sort by:
@@ -31,33 +27,6 @@
           <option>Most Relevant</option>
           <option>Salary</option>
         </select>
-      </div>
-    </div>
-
-    <!-- More Filters Panel -->
-    <div *ngIf="showMoreFilters" class="bg-white border border-gray-200 rounded-xl p-5 mb-6 flex flex-wrap gap-6">
-      <div>
-        <p class="text-sm font-medium text-gray-700 mb-2">Job Type</p>
-        <div class="flex flex-wrap gap-2">
-          <button *ngFor="let t of moreJobTypes" (click)="toggleMoreJobType(t)"
-            [class]="selectedMoreJobTypes.includes(t) ? 'bg-blue-700 text-white px-3 py-1 rounded-full text-xs font-medium' : 'bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs hover:bg-gray-200'">
-            {{ t }}
-          </button>
-        </div>
-      </div>
-      <div>
-        <p class="text-sm font-medium text-gray-700 mb-2">Min Salary</p>
-        <input [(ngModel)]="minSalary" type="number" min="0" placeholder="e.g. 50000"
-          class="border border-gray-200 rounded-lg px-3 py-1.5 text-sm w-36 focus:outline-none" />
-      </div>
-      <div>
-        <p class="text-sm font-medium text-gray-700 mb-2">Max Salary</p>
-        <input [(ngModel)]="maxSalary" type="number" min="0" placeholder="e.g. 200000"
-          class="border border-gray-200 rounded-lg px-3 py-1.5 text-sm w-36 focus:outline-none" />
-      </div>
-      <div class="flex items-end gap-2">
-        <button (click)="applyMoreFilters()" class="bg-blue-700 text-white px-4 py-1.5 rounded-full text-sm font-medium hover:bg-blue-800">Apply</button>
-        <button (click)="clearMoreFilters()" class="border border-gray-200 text-gray-500 px-4 py-1.5 rounded-full text-sm hover:bg-gray-50">Clear</button>
       </div>
     </div>
 
@@ -136,10 +105,6 @@
           <button *ngIf="appliedJobIds.has(job.jobId)"
             class="flex-1 bg-gray-100 text-gray-500 text-xs font-semibold py-2 rounded-full cursor-default">
             Applied ✓
-          </button>
-          <button (click)="toggleBookmark(job.jobId)"
-            [class]="bookmarkedJobIds.has(job.jobId) ? 'border border-blue-300 bg-blue-50 text-blue-600 text-xs px-3 py-2 rounded-full' : 'border border-gray-200 text-gray-500 text-xs px-3 py-2 rounded-full hover:bg-gray-50'">
-            {{ bookmarkedJobIds.has(job.jobId) ? '🔖 Saved' : 'Save' }}
           </button>
         </div>
 

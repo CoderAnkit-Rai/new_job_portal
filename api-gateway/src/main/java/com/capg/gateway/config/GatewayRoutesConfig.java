@@ -27,12 +27,6 @@ public class GatewayRoutesConfig {
     @Value("${search.service.url:http://search-service:8086}")
     private String searchServiceUrl;
 
-    @Value("${analytics.service.url:http://analytics-service:8087}")
-    private String analyticsServiceUrl;
-
-    @Value("${ai.service.url:http://ai-service:8089}")
-    private String aiServiceUrl;
-
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
@@ -41,8 +35,6 @@ public class GatewayRoutesConfig {
             .route("application-service", r -> r.path("/api/applications/**").uri(applicationServiceUrl))
             .route("resume-service", r -> r.path("/api/resumes/**").uri(resumeServiceUrl))
             .route("search-service", r -> r.path("/search/**").uri(searchServiceUrl))
-            .route("analytics-service", r -> r.path("/analytics/**").uri(analyticsServiceUrl))
-            .route("ai-service", r -> r.path("/api/ai/**").uri(aiServiceUrl))
             .route("notification-service", r -> r.path("/notifications/**").uri(notificationServiceUrl))
             .build();
     }

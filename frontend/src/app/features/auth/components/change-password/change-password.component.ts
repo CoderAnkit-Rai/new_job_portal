@@ -6,7 +6,7 @@ import { NavbarComponent } from '../../../../shared/components/navbar/navbar.com
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { ResumeService } from '../../../job-seeker/services/resume.service';
 import { AuthService } from '../../../../core/services/auth.service';
-
+ 
 @Component({
   selector: 'app-change-password',
   standalone: true,
@@ -15,7 +15,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 <div class="min-h-screen flex flex-col bg-gray-50">
   <app-navbar />
 
-  <!-- Toast -->
+  <!-- Toast --> 
   <div *ngIf="toastMessage" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-white border border-green-200 shadow-xl rounded-2xl px-6 py-4 flex items-center gap-4 min-w-80">
     <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xl shrink-0">✅</div>
     <div>
@@ -44,13 +44,13 @@ import { AuthService } from '../../../../core/services/auth.service';
             class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label> 
           <input [(ngModel)]="confirmPassword" type="password" placeholder="Re-enter new password"
             class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
       </div>
-
-      <button (click)="changePassword()" [disabled]="saving"
+ 
+      <button (click)="changePassword()" [disabled]="saving" 
         class="w-full mt-6 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2.5 rounded-full transition disabled:opacity-50">
         {{ saving ? 'Updating...' : 'Update Password' }}
       </button>
@@ -100,9 +100,9 @@ export class ChangePasswordComponent {
       return;
     }
     this.saving = true;
-    this.resumeService.updateProfile(this.profile.id, {
-      name: this.profile.name,
-      password: this.newPassword
+    this.resumeService.updateProfile(this.profile.id, { 
+      name: this.profile.name, 
+      password: this.newPassword 
     }).subscribe({
       next: () => {
         this.saving = false;
@@ -122,7 +122,7 @@ export class ChangePasswordComponent {
   }
 
   goBack() {
-    const role = this.authService.getRole();
+    const role = this.authService.getRole(); 
     if (role === 'RECRUITER') this.router.navigate(['/recruiter/dashboard']);
     else if (role === 'ADMIN') this.router.navigate(['/admin/dashboard']);
     else this.router.navigate(['/profile']);

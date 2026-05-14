@@ -1,11 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { LucideAngularModule, Compass, User, Building2, Zap, Search, FileText, Clipboard, Edit3, Users, Upload, Lock } from 'lucide-angular';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, LucideAngularModule],
   template: `
 <div class="min-h-screen bg-white flex flex-col">
 
@@ -13,7 +14,7 @@ import { Router, RouterLink } from '@angular/router';
   <nav class="w-full px-8 py-4 flex items-center justify-between border-b border-gray-100 bg-white sticky top-0 z-50">
     <div class="flex items-center gap-2 cursor-pointer" (click)="scrollToTop()">
       <div class="w-9 h-9 flex items-center justify-center">
-        <span class="text-2xl">🧭</span>
+        <lucide-icon [img]="CompassIcon" class="text-blue-700" [size]="32"></lucide-icon>
       </div>
       <span class="text-lg tracking-widest uppercase">
         <span class="font-black text-gray-900" style="letter-spacing:0.08em; text-shadow: 2px 2px 0px #cbd5e1">JOB</span><span class="font-black text-blue-700" style="letter-spacing:0.08em; text-shadow: 2px 2px 0px #bfdbfe">COMPASS</span><span class="text-blue-400 text-xs align-super ml-1">▲</span>
@@ -26,8 +27,8 @@ import { Router, RouterLink } from '@angular/router';
   </nav>
 
   <!-- Hero -->
-  <section class="flex flex-col items-center justify-center text-center px-6 pt-24 pb-20 bg-gradient-to-b from-blue-50 to-white">
-    <span class="text-xs font-semibold text-blue-700 bg-blue-100 px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">🧭 Your Career Starts Here</span>
+  <section class="flex flex-col items-center justify-center text-center px-6 pt-24 pb-20 bg-gradient-to-b from-blue-50 to-white"> 
+    <span class="text-xs font-semibold text-blue-700 bg-blue-100 px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase inline-flex items-center gap-2"><lucide-icon [img]="CompassIcon" [size]="14"></lucide-icon> Your Career Starts Here</span>
     <h1 class="text-5xl font-extrabold text-gray-900 leading-tight max-w-3xl mb-6">
       Find Your <span class="text-blue-700">Dream Job</span><br/>or Hire Top Talent
     </h1>
@@ -59,12 +60,12 @@ import { Router, RouterLink } from '@angular/router';
   <!-- For Job Seekers -->
   <section class="py-20 px-6 max-w-6xl mx-auto w-full">
     <div class="text-center mb-12">
-      <span class="text-xs font-semibold text-blue-700 bg-blue-100 px-4 py-1.5 rounded-full uppercase tracking-wide">👤 For Job Seekers</span>
+      <span class="text-xs font-semibold text-blue-700 bg-blue-100 px-4 py-1.5 rounded-full uppercase tracking-wide inline-flex items-center gap-2"><lucide-icon [img]="UserIcon" [size]="14"></lucide-icon> For Job Seekers</span>
       <h2 class="text-3xl font-bold text-gray-900 mt-4">Everything you need to land your next role</h2>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       <div *ngFor="let f of seekerFeatures" class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-        <div class="text-3xl mb-4">{{ f.icon }}</div>
+        <div class="mb-4 text-blue-700"><lucide-icon [img]="f.icon" [size]="32"></lucide-icon></div>
         <h3 class="font-bold text-gray-900 mb-2">{{ f.title }}</h3>
         <p class="text-sm text-gray-500 leading-relaxed">{{ f.desc }}</p>
       </div>
@@ -75,12 +76,12 @@ import { Router, RouterLink } from '@angular/router';
   <section class="py-20 px-6 bg-gray-50">
     <div class="max-w-6xl mx-auto w-full">
       <div class="text-center mb-12">
-        <span class="text-xs font-semibold text-blue-700 bg-blue-100 px-4 py-1.5 rounded-full uppercase tracking-wide">🏢 For Recruiters</span>
+        <span class="text-xs font-semibold text-blue-700 bg-blue-100 px-4 py-1.5 rounded-full uppercase tracking-wide inline-flex items-center gap-2"><lucide-icon [img]="BuildingIcon" [size]="14"></lucide-icon> For Recruiters</span>
         <h2 class="text-3xl font-bold text-gray-900 mt-4">Hire smarter, faster</h2>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div *ngFor="let f of recruiterFeatures" class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-          <div class="text-3xl mb-4">{{ f.icon }}</div>
+          <div class="mb-4 text-blue-700"><lucide-icon [img]="f.icon" [size]="32"></lucide-icon></div>
           <h3 class="font-bold text-gray-900 mb-2">{{ f.title }}</h3>
           <p class="text-sm text-gray-500 leading-relaxed">{{ f.desc }}</p>
         </div>
@@ -91,7 +92,7 @@ import { Router, RouterLink } from '@angular/router';
   <!-- How It Works -->
   <section class="py-20 px-6 max-w-5xl mx-auto w-full">
     <div class="text-center mb-14">
-      <span class="text-xs font-semibold text-blue-700 bg-blue-100 px-4 py-1.5 rounded-full uppercase tracking-wide">⚡ How It Works</span>
+      <span class="text-xs font-semibold text-blue-700 bg-blue-100 px-4 py-1.5 rounded-full uppercase tracking-wide inline-flex items-center gap-2"><lucide-icon [img]="ZapIcon" [size]="14"></lucide-icon> How It Works</span>
       <h2 class="text-3xl font-bold text-gray-900 mt-4">Get started in 3 simple steps</h2>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 relative">
@@ -129,56 +130,43 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class LandingComponent implements OnInit {
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor() {}
+
+  CompassIcon = Compass;
+  UserIcon = User;
+  BuildingIcon = Building2;
+  ZapIcon = Zap;
+  SearchIcon = Search;
+  FileTextIcon = FileText;
+  ClipboardIcon = Clipboard;
+  Edit3Icon = Edit3;
+  UsersIcon = Users;
+  UploadIcon = Upload;
+  LockIcon = Lock;
 
   stats = [
-    { target: 500, current: 0, display: '0', label: 'Jobs Posted', suffix: '+' },
-    { target: 200, current: 0, display: '0', label: 'Companies', suffix: '+' },
-    { target: 1000, current: 0, display: '0', label: 'Job Seekers', suffix: '+' },
-    { target: 350, current: 0, display: '0', label: 'Hired', suffix: '+' },
+    { display: '500+', label: 'Jobs Posted' },
+    { display: '200+', label: 'Companies' },
+    { display: '1,000+', label: 'Job Seekers' },
+    { display: '350+', label: 'Hired' },
   ];
 
-  ngOnInit() {
-    setTimeout(() => this.animateStats(), 300);
-  }
+  ngOnInit() {}
 
   scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-  animateStats() {
-    const duration = 2000;
-    const steps = 60;
-    const interval = duration / steps;
-    let step = 0;
-    const timer = setInterval(() => {
-      step++;
-      const progress = step / steps;
-      const ease = 1 - Math.pow(1 - progress, 3);
-      this.stats.forEach(stat => {
-        stat.current = Math.round(stat.target * ease);
-        const val = stat.current >= 1000 ? (stat.current / 1000).toFixed(0) + ',000' : stat.current.toString();
-        stat.display = val + (progress >= 1 ? stat.suffix : '');
-      });
-      this.cdr.detectChanges();
-      if (step >= steps) clearInterval(timer);
-    }, interval);
-  }
-
   seekerFeatures = [
-    { icon: '🔍', title: 'Smart Job Search', desc: 'Filter by title, location, salary, and job type to find roles that match exactly what you\'re looking for.' },
-    { icon: '⚡', title: 'One-Click Apply', desc: 'Apply to jobs instantly with your saved profile and resume. No repetitive form filling.' },
-    { icon: '📋', title: 'Track Applications', desc: 'See real-time status updates — Applied, Shortlisted, Interview, or Rejected — all in one place.' },
-    { icon: '📄', title: 'Resume Builder', desc: 'Upload your resume and let our AI analyzer give you tips to improve it for better results.' },
-    { icon: '🤖', title: 'AI Assistant', desc: 'Ask our AI chatbot anything about your applications, profile completeness, or available jobs.' },
-    { icon: '🔖', title: 'Bookmark Jobs', desc: 'Save interesting jobs and come back to apply when you\'re ready.' },
+    { icon: Search, title: 'Smart Job Search', desc: 'Filter by title, location, salary, and job type to find roles that match exactly what you\'re looking for.' },
+    { icon: Zap, title: 'One-Click Apply', desc: 'Apply to jobs instantly with your saved profile and resume. No repetitive form filling.' },
+    { icon: Clipboard, title: 'Track Applications', desc: 'See real-time status updates — Applied, Shortlisted, Interview, or Rejected — all in one place.' },
+    { icon: FileText, title: 'Resume Builder', desc: 'Upload your resume and let our AI analyzer give you tips to improve it for better results.' },
   ];
 
   recruiterFeatures = [
-    { icon: '📝', title: 'Post Jobs Easily', desc: 'Create detailed job listings with title, description, salary, location, and job type in minutes.' },
-    { icon: '👥', title: 'Manage Applicants', desc: 'Review applicants, view their resumes and skills, and update their status with a single click.' },
-    { icon: '📊', title: 'Dashboard Analytics', desc: 'Get a clear overview of your open roles, total applicants, shortlisted candidates, and more.' },
-    { icon: '📤', title: 'Export Data', desc: 'Download applicant data as CSV for offline review or sharing with your hiring team.' },
-    { icon: '🤖', title: 'AI Assistant', desc: 'Ask the AI chatbot about your posted jobs, applicant counts, and hiring pipeline.' },
-    { icon: '🔒', title: 'Close & Reopen Jobs', desc: 'Control your listings — close a role when filled and reopen it anytime you need more candidates.' },
+    { icon: Edit3, title: 'Post Jobs Easily', desc: 'Create detailed job listings with title, description, salary, location, and job type in minutes.' },
+    { icon: Users, title: 'Manage Applicants', desc: 'Review applicants, view their resumes and skills, and update their status with a single click.' },
+    { icon: Upload, title: 'Export Data', desc: 'Download applicant data as CSV for offline review or sharing with your hiring team.' },
+    { icon: Lock, title: 'Close & Reopen Jobs', desc: 'Control your listings — close a role when filled and reopen it anytime you need more candidates.' },
   ];
 
   steps = [

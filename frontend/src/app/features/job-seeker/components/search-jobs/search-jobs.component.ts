@@ -133,7 +133,6 @@ import { ApplicationService } from '../../services/application.service';
               </button>
               <button *ngIf="appliedJobIds.has(job.jobId)"
                 class="bg-gray-100 text-gray-500 text-xs font-semibold px-4 py-2 rounded-full cursor-default">Applied ✓</button>
-              <button class="border border-gray-200 text-gray-500 text-xs px-4 py-2 rounded-full hover:bg-gray-50">🔖 Save</button>
             </div>
           </div>
         </div>

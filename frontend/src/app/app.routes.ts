@@ -82,13 +82,6 @@ export const routes: Routes = [
     loadComponent: () => import('./features/recruiter/components/profile/recruiter-profile.component').then(m => m.RecruiterProfileComponent)
   },
 
-  // Admin routes
-  {
-    path: 'admin/dashboard',
-    canActivate: [authGuard, roleGuard(['ADMIN'])],
-    loadComponent: () => import('./features/admin/components/analytics-dashboard/analytics-dashboard.component').then(m => m.AnalyticsDashboardComponent)
-  },
-
   // Legal routes
   { path: 'about', loadComponent: () => import('./features/legal/legal.component').then(m => m.LegalComponent), data: { page: 'about' } },
   { path: 'careers', loadComponent: () => import('./features/legal/legal.component').then(m => m.LegalComponent), data: { page: 'careers' } },

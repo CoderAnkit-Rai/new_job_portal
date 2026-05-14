@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthApiService } from '../../services/auth-api.service';
+import { LucideAngularModule, User, Building2 } from 'lucide-angular';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, LucideAngularModule],
   template: `
 <div class="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-4 py-10">
   <div class="flex flex-col items-center mb-6">
@@ -16,27 +17,22 @@ import { AuthApiService } from '../../services/auth-api.service';
     </div>
     <h1 class="text-2xl font-bold text-gray-900">Create your account</h1>
     <p class="text-gray-500 text-sm mt-1">Join the professional community and take the next step in your career</p>
-  </div>
+  </div> 
 
   <div class="bg-white rounded-2xl shadow-md w-full max-w-lg p-8">
     <p class="text-sm font-medium text-gray-700 mb-3">I want to use this platform to...</p>
-    <div class="grid grid-cols-3 gap-3 mb-6">
+    <div class="grid grid-cols-2 gap-3 mb-6">
       <button type="button" (click)="selectRole('JOB_SEEKER')"
         [class]="selectedRole === 'JOB_SEEKER' ? 'border-2 border-blue-600 bg-blue-50 rounded-xl p-3 text-center' : 'border border-gray-200 rounded-xl p-3 text-center hover:bg-gray-50'">
-        <div class="text-2xl mb-1">👤</div>
+        <div class="mb-1 flex justify-center text-blue-700"><lucide-icon [img]="UserIcon" [size]="28"></lucide-icon></div>
         <div class="text-sm font-semibold text-gray-800">Find a Job</div>
         <div class="text-xs text-gray-500">I'm a Job Seeker</div>
       </button>
       <button type="button" (click)="selectRole('RECRUITER')"
         [class]="selectedRole === 'RECRUITER' ? 'border-2 border-blue-600 bg-blue-50 rounded-xl p-3 text-center' : 'border border-gray-200 rounded-xl p-3 text-center hover:bg-gray-50'">
-        <div class="text-2xl mb-1">🏢</div>
+        <div class="mb-1 flex justify-center text-blue-700"><lucide-icon [img]="BuildingIcon" [size]="28"></lucide-icon></div>
         <div class="text-sm font-semibold text-gray-800">Hire Talent</div>
         <div class="text-xs text-gray-500">I'm a Recruiter</div>
-      </button>
-      <button type="button" disabled class="border border-gray-200 rounded-xl p-3 text-center opacity-50 cursor-not-allowed">
-        <div class="text-2xl mb-1">🛡️</div>
-        <div class="text-sm font-semibold text-gray-800">Manage System</div>
-        <div class="text-xs text-orange-500">Admin (Invite Only)</div>
       </button>
     </div>
 
@@ -77,9 +73,9 @@ import { AuthApiService } from '../../services/auth-api.service';
       </div>
 
       <div class="flex items-start gap-2 mb-6">
-        <input type="checkbox" [(ngModel)]="agreedToTerms" [ngModelOptions]="{standalone: true}" class="mt-0.5 rounded" />
+        <input type="checkbox" [(ngModel)]="agreedToTerms" [ngModelOptions]="{standalone: true}" class="mt-0.5 rounded" /> 
         <p class="text-xs text-gray-500">
-          By clicking Agree &amp; Join, you agree to the
+          By clicking Agree &amp; Join, you agree to the 
           <a href="#" class="text-blue-600 hover:underline">User Agreement</a>,
           <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a>, and
           <a href="#" class="text-blue-600 hover:underline">Cookie Policy</a>.
@@ -109,6 +105,9 @@ export class RegisterComponent {
   agreedToTerms = false;
   submitted = false;
 
+  UserIcon = User;
+  BuildingIcon = Building2;
+ 
   constructor(
     private fb: FormBuilder,
     private authApi: AuthApiService,
@@ -120,17 +119,17 @@ export class RegisterComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
     });
-  }
+  } 
 
   selectRole(role: string) {
     if (role !== 'ADMIN') this.selectedRole = role;
-  }
+  } 
 
   onSubmit() {
     this.submitted = true;
-    if (this.form.invalid) return;
-    if (this.form.value.password !== this.form.value.confirmPassword) {
-      this.error = 'Passwords do not match';
+    if (this.form.invalid) return; 
+    if (this.form.value.password !== this.form.value.confirmPassword) { 
+      this.error = 'Passwords do not match';  
       return;
     }
     if (!this.agreedToTerms) {

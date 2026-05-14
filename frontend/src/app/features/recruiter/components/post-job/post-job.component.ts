@@ -5,11 +5,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NavbarComponent } from '../../../../shared/components/navbar/navbar.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { RecruiterJobService } from '../../services/recruiter-job.service';
+import { ConfirmModalComponent } from '../../../../shared/components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-post-job',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent, ConfirmModalComponent],
   templateUrl: './post-job.component.html'
 })
 export class PostJobComponent implements OnInit {
@@ -26,6 +27,7 @@ export class PostJobComponent implements OnInit {
 
   loading = false;
   success = false;
+  showSuccessModal = false;
   error = '';
   editJobId: number | null = null;
 
@@ -61,8 +63,13 @@ export class PostJobComponent implements OnInit {
       this.error = 'Please fill in all required fields';
       return;
     }
+    if (this.form.salary !== null && this.form.salary < 0) {
+      this.error = 'Salary cannot be negative';
+      return;
+    }
     this.loading = true;
     this.error = '';
+    this.cdr.detectChanges();
     const payload = {
       title: this.form.title,
       company: this.form.company,
@@ -78,8 +85,8 @@ export class PostJobComponent implements OnInit {
 
     request$.subscribe({
       next: () => {
-        this.success = true;
         this.loading = false;
+        this.showSuccessModal = true;
         this.cdr.detectChanges();
       },
       error: (err) => {

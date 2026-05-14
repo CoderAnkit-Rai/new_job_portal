@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
-import { LucideAngularModule, Briefcase, Search, ClipboardList, FileText, LayoutDashboard, PlusCircle, Users, Moon, Sun, ChevronDown, Menu, X, Lock, LogOut, User, BarChart2 } from 'lucide-angular';
+import { LucideAngularModule, Briefcase, Search, ClipboardList, FileText, LayoutDashboard, PlusCircle, Users, Moon, Sun, ChevronDown, Menu, X, Lock, LogOut, User } from 'lucide-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -67,7 +67,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly Lock = Lock;
   readonly LogOut = LogOut;
   readonly User = User;
-  readonly BarChart2 = BarChart2;
 
   navSearch = '';
 

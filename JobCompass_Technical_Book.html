@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JobCompass — Technical Documentation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;font-size:11.5pt;line-height:1.75;color:#1a1a2e;background:#fff;max-width:850px;margin:0 auto;padding:40px 50px}
+h1{font-size:28pt;font-weight:900;color:#1e3a5f;margin:0 0 10px;line-height:1.2}
+h2{font-size:20pt;font-weight:800;color:#1e3a5f;margin:50px 0 15px;border-bottom:3px solid #2563eb;padding-bottom:8px}
+h3{font-size:15pt;font-weight:700;color:#1e3a5f;margin:35px 0 12px}
+h4{font-size:12.5pt;font-weight:600;color:#334155;margin:25px 0 10px}
+p{margin:0 0 12px;text-align:justify}
+ul,ol{margin:0 0 15px 25px}
+li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:15px 0 25px;font-size:10.5pt}
+th{background:#1e3a5f;color:#fff;padding:10px 12px;text-align:left;font-weight:600}
+td{padding:8px 12px;border:1px solid #e2e8f0}
+tr:nth-child(even){background:#f8fafc}
+pre{background:#0f172a;color:#e2e8f0;padding:18px 20px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:9.5pt;line-height:1.6;overflow-x:auto;margin:15px 0 20px;white-space:pre-wrap}
+code{font-family:'JetBrains Mono',monospace;font-size:9.5pt;background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#be185d}
+pre code{background:none;padding:0;color:#e2e8f0}
+.keyword{color:#7dd3fc}
+.string{color:#86efac}
+.comment{color:#64748b;font-style:italic}
+.title-page{text-align:center;padding:120px 0;page-break-after:always}
+.title-page h1{font-size:42pt;color:#1e3a5f;margin-bottom:15px}
+.title-page .subtitle{font-size:16pt;color:#475569;font-weight:400;margin-bottom:40px}
+.title-page .meta{font-size:12pt;color:#64748b;line-height:2}
+.toc{page-break-after:always}
+.toc h2{text-align:center;border:none}
+.toc ul{list-style:none;margin:0;padding:0}
+.toc>ul>li{padding:8px 0;border-bottom:1px dotted #cbd5e1;font-weight:600;font-size:11pt}
+.toc ul ul{margin:4px 0 4px 25px}
+.toc ul ul li{font-weight:400;font-size:10.5pt;border:none;padding:3px 0;color:#475569}
+.note{background:#eff6ff;border-left:4px solid #2563eb;padding:15px 18px;margin:18px 0;border-radius:0 8px 8px 0;font-size:10.5pt}
+.warning{background:#fef3c7;border-left:4px solid #d97706;padding:15px 18px;margin:18px 0;border-radius:0 8px 8px 0;font-size:10.5pt}
+.diagram{background:#f8fafc;border:2px solid #e2e8f0;padding:20px;margin:20px 0;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:9pt;line-height:1.5;white-space:pre;overflow-x:auto}
+.page-break{page-break-before:always}
+@media print{
+body{padding:0;font-size:11pt}
+h2{page-break-before:always}
+.title-page{padding:200px 0}
+pre{font-size:8.5pt}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                        TITLE PAGE                              -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="title-page">
+<h1>JobCompass</h1>
+<div class="subtitle">Job Portal Management System</div>
+<div class="subtitle" style="font-size:14pt;color:#2563eb;font-weight:600">Complete Technical Documentation</div>
+<br><br>
+<div class="meta">
+A Comprehensive Codebase Walkthrough &amp; Architecture Reference<br>
+Microservices · Angular 21 · Spring Boot · RabbitMQ · Docker<br><br>
+Version 1.0 · May 2026<br>
+Organization: Capgemini<br><br>
+<em>Prepared for Academic Evaluation, Viva, and Code Walkthrough</em>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                     TABLE OF CONTENTS                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="toc">
+<h2>Table of Contents</h2>
+<ul>
+<li>Part I — Foundation &amp; Project Setup
+<ul>
+<li>Chapter 1: Project Overview</li>
+<li>Chapter 2: Problem Statement &amp; Objectives</li>
+<li>Chapter 3: Technology Stack</li>
+<li>Chapter 4: System Architecture</li>
+<li>Chapter 5: Codebase Folder Structure</li>
+<li>Chapter 6: Angular Fundamentals Used in This Project</li>
+</ul></li>
+<li>Part II — Authentication &amp; User Flows
+<ul>
+<li>Chapter 7: Landing Page</li>
+<li>Chapter 8: Registration Flow</li>
+<li>Chapter 9: Login Flow</li>
+<li>Chapter 10: Authentication &amp; Authorization Deep Dive</li>
+<li>Chapter 11: Role-Based Access Control</li>
+<li>Chapter 12: Routing &amp; Navigation</li>
+</ul></li>
+<li>Part III — Job Seeker Features
+<ul>
+<li>Chapter 13: Job Seeker Dashboard</li>
+<li>Chapter 14: Job Listing &amp; Search</li>
+<li>Chapter 15: Job Detail &amp; Application</li>
+<li>Chapter 16: My Applications Tracking</li>
+<li>Chapter 17: Resume Upload</li>
+<li>Chapter 18: Profile Management</li>
+</ul></li>
+<li>Part IV — Recruiter Features
+<ul>
+<li>Chapter 19: Recruiter Dashboard</li>
+<li>Chapter 20: Job Creation</li>
+<li>Chapter 21: Applicant Management</li>
+<li>Chapter 22: Recruiter Profile</li>
+</ul></li>
+<li>Part V — Backend Architecture
+<ul>
+<li>Chapter 23: Backend Architecture Overview</li>
+<li>Chapter 24: User Service</li>
+<li>Chapter 25: Job Service</li>
+<li>Chapter 26: Application Service</li>
+<li>Chapter 27: Resume Service</li>
+<li>Chapter 28: Search &amp; Notification Services</li>
+<li>Chapter 29: API Gateway &amp; Security</li>
+</ul></li>
+<li>Part VI — Infrastructure &amp; Advanced Topics
+<ul>
+<li>Chapter 30: Database Design</li>
+<li>Chapter 31: Event-Driven Architecture (RabbitMQ)</li>
+<li>Chapter 32: Caching with Redis</li>
+<li>Chapter 33: Docker &amp; Deployment</li>
+<li>Chapter 34: End-to-End Request Lifecycle</li>
+<li>Chapter 35: Error Handling Strategy</li>
+<li>Chapter 36: Reusable Code Patterns</li>
+<li>Chapter 37: Viva Questions &amp; Answers</li>
+<li>Chapter 38: Future Enhancements, Conclusion &amp; Appendix</li>
+</ul></li>
+</ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                  PART I — FOUNDATION                           -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<h1 style="text-align:center;font-size:24pt;padding:80px 0;page-break-before:always;border:none">Part I<br><span style="font-weight:400;font-size:16pt;color:#475569">Foundation &amp; Project Setup</span></h1>
+
+<!-- ─── CHAPTER 1 ─────────────────────────────────────────────── -->
+<h2>Chapter 1: Project Overview</h2>
+
+<h3>1.1 What Is JobCompass?</h3>
+<p>JobCompass is a full-stack, microservices-based Job Portal Management System designed to connect job seekers with recruiters through a modern, responsive web application. The system enables job seekers to search for jobs, apply with a single click, upload resumes, and track application status in real time. Recruiters can post job listings, review applicants, manage hiring pipelines, and update application statuses — all through a polished, role-aware user interface.</p>
+
+<p>The project is built under the <code>com.capg</code> (Capgemini) organization namespace and demonstrates enterprise-grade software engineering practices including:</p>
+<ul>
+<li><strong>Microservices decomposition</strong> — Six independent business services, each owning its own database</li>
+<li><strong>Event-driven architecture</strong> — Asynchronous communication via RabbitMQ for decoupled service interactions</li>
+<li><strong>API gateway pattern</strong> — Centralized routing, authentication, and role-based access control</li>
+<li><strong>Modern frontend</strong> — Angular 21 with standalone components, lazy loading, and TailwindCSS 4</li>
+<li><strong>Containerized deployment</strong> — Docker Compose orchestration of 13+ containers</li>
+</ul>
+
+<h3>1.2 System Actors</h3>
+<p>JobCompass recognizes three distinct user roles, each defined in the <code>Role</code> enum within the user-service:</p>
+
+<table>
+<tr><th>Role</th><th>Description</th><th>Primary Actions</th></tr>
+<tr><td><strong>JOB_SEEKER</strong></td><td>An individual searching for employment opportunities</td><td>Browse jobs, search with filters, apply to jobs, upload resumes, track application status, manage profile</td></tr>
+<tr><td><strong>RECRUITER</strong></td><td>A hiring professional representing a company</td><td>Post job listings, review applicants, view resumes, update application statuses (shortlist, schedule interview, reject), close job postings</td></tr>
+<tr><td><strong>ADMIN</strong></td><td>A system administrator with elevated privileges</td><td>Access to admin-restricted endpoints (reserved for future use in the current implementation)</td></tr>
+</table>
+
+<p>The role is assigned at registration time and embedded into the JWT token. Every subsequent request carries this role, which is validated at both the API gateway level and the individual service level, creating a defense-in-depth authorization model.</p>
+
+<h3>1.3 Core Features Summary</h3>
+
+<h4>Job Seeker Features</h4>
+<ol>
+<li><strong>Smart Job Search</strong> — Multi-parameter search by keyword, location, company, salary range, job type, and experience level via the search-service</li>
+<li><strong>One-Click Apply</strong> — Apply to any open job posting with a single API call; duplicate applications are automatically prevented</li>
+<li><strong>Application Tracking</strong> — Real-time visibility into application status progression: Applied → Shortlisted → Interview Scheduled → Rejected</li>
+<li><strong>Resume Management</strong> — Upload PDF/DOC/DOCX resumes via multipart file upload; maintain version history; view and delete resumes</li>
+<li><strong>Profile Management</strong> — Update personal details including name, mobile number, skills, and professional headline</li>
+<li><strong>Application Withdrawal</strong> — Withdraw applications that are still in the APPLIED status</li>
+</ol>
+
+<h4>Recruiter Features</h4>
+<ol>
+<li><strong>Job Posting</strong> — Create detailed listings with title, company, location, salary, description, employment type, and experience level</li>
+<li><strong>Job Editing</strong> — Update existing job details via query parameter-based edit mode</li>
+<li><strong>Job Closure</strong> — Close filled positions, triggering RabbitMQ events to update the search index and notify downstream services</li>
+<li><strong>Applicant Review</strong> — View all applicants for a specific job with filtering and search capabilities</li>
+<li><strong>Applicant Profile Inspection</strong> — Slide-over panel showing applicant details, skills, contact information, and downloadable resumes</li>
+<li><strong>Status Management</strong> — Update application status with a dropdown selector directly from the applicant management table</li>
+<li><strong>Dashboard Analytics</strong> — Overview cards showing open roles count, total applicants, shortlisted candidates, and scheduled interviews</li>
+</ol>
+
+<h3>1.4 Application Branding</h3>
+<p>The application is branded as <strong>JobCompass</strong>, using a compass (🧭) icon as its logo. The branding is implemented consistently across all components: the landing page navbar uses Lucide Angular's <code>Compass</code> icon, while the footer and legal pages use the emoji variant. The brand name renders as "JOB" in dark gray with "COMPASS" in blue (or red in the footer), with a small triangle (<code>▲</code>) superscript accent. This branding is defined inline within each component's template rather than through a shared brand component.</p>
+
+<!-- ─── CHAPTER 2 ─────────────────────────────────────────────── -->
+<h2>Chapter 2: Problem Statement &amp; Objectives</h2>
+
+<h3>2.1 Problem Statement</h3>
+<p>The modern recruitment landscape faces several critical challenges that traditional job portals fail to adequately address:</p>
+
+<p><strong>For Job Seekers:</strong></p>
+<ul>
+<li><strong>Fragmented Experience</strong> — Job seekers must visit multiple platforms, fill out repetitive forms, and manually track applications across different systems with no unified view of their hiring pipeline.</li>
+<li><strong>Lack of Transparency</strong> — After applying, candidates often face a "black hole" effect where they receive no feedback about their application's progress, leaving them unable to plan their job search effectively.</li>
+<li><strong>Cumbersome Application Process</strong> — Many portals require lengthy multi-step forms for each application, discouraging candidates from applying to multiple positions.</li>
+</ul>
+
+<p><strong>For Recruiters:</strong></p>
+<ul>
+<li><strong>Manual Pipeline Management</strong> — Without integrated tools, recruiters resort to spreadsheets and email chains to track applicants, leading to missed candidates and delayed responses.</li>
+<li><strong>No Centralized Applicant View</strong> — Viewing an applicant's profile, resume, and application status typically requires switching between multiple tools and systems.</li>
+<li><strong>Scalability Limitations</strong> — Monolithic job portal systems struggle to handle peak loads during hiring seasons and cannot be independently scaled based on which features are most heavily used.</li>
+</ul>
+
+<p><strong>From an Architectural Perspective:</strong></p>
+<ul>
+<li><strong>Tight Coupling</strong> — Traditional monolithic job portals bind all features into a single deployable unit, making it impossible to update the search functionality without risking the authentication system.</li>
+<li><strong>Single Point of Failure</strong> — A bug in the notification module can bring down the entire application, including critical job posting and application features.</li>
+<li><strong>Technology Lock-in</strong> — Monolithic systems cannot leverage different technologies for different concerns (e.g., Redis for caching, Elasticsearch for search, RabbitMQ for events).</li>
+</ul>
+
+<h3>2.2 Objectives</h3>
+<p>JobCompass was designed with the following specific, measurable objectives:</p>
+
+<ol>
+<li><strong>Build a role-based, responsive job portal</strong> supporting distinct workflows for Job Seekers and Recruiters with seamless role-based navigation and access control.</li>
+<li><strong>Implement a microservices architecture</strong> with six independent business services, each owning its own PostgreSQL database, communicating via REST APIs and RabbitMQ message queues.</li>
+<li><strong>Develop a modern Angular 21 frontend</strong> using standalone components, functional guards, HTTP interceptors, and lazy-loaded routes for optimal performance.</li>
+<li><strong>Implement stateless JWT authentication</strong> with token generation at the user-service, validation at the API gateway, and header-based identity propagation to downstream services.</li>
+<li><strong>Enable event-driven communication</strong> using RabbitMQ topic exchanges to decouple job creation, application submission, and resume upload events from notification and search indexing concerns.</li>
+<li><strong>Provide real-time application status tracking</strong> with a four-state lifecycle (Applied → Shortlisted → Interview Scheduled → Rejected) visible to both seekers and recruiters.</li>
+<li><strong>Support file upload and management</strong> with multipart file handling, path traversal prevention, content type detection, and version history for resumes.</li>
+<li><strong>Containerize the entire system</strong> using Docker and Docker Compose for consistent development, testing, and deployment environments.</li>
+<li><strong>Aggregate API documentation</strong> using SpringDoc OpenAPI with Swagger UI accessible through the API gateway, covering all service endpoints.</li>
+<li><strong>Design for extensibility</strong> with clean separation of concerns, MapStruct mappers, global exception handlers, and externalized configuration via Spring Cloud Config Server.</li>
+</ol>
+
+<h3>2.3 Scope of the Project</h3>
+
+<table>
+<tr><th>In Scope</th><th>Out of Scope (Future Enhancement)</th></tr>
+<tr><td>User registration and login with JWT</td><td>OAuth2 / Social login integration</td></tr>
+<tr><td>Job CRUD operations for recruiters</td><td>Job recommendation engine / ML-based matching</td></tr>
+<tr><td>Job search with multi-parameter filters</td><td>Full-text search with Elasticsearch</td></tr>
+<tr><td>Application lifecycle management</td><td>In-app messaging between seeker and recruiter</td></tr>
+<tr><td>Resume upload (file + URL)</td><td>AI-powered resume parsing and scoring</td></tr>
+<tr><td>Email notifications (via SMTP)</td><td>Push notifications / WebSocket real-time updates</td></tr>
+<tr><td>Docker Compose deployment</td><td>Kubernetes orchestration / Cloud deployment</td></tr>
+<tr><td>API documentation via Swagger</td><td>API rate limiting and throttling</td></tr>
+</table>
+
+<!-- ─── CHAPTER 3 ─────────────────────────────────────────────── -->
+<h2>Chapter 3: Technology Stack</h2>
+
+<h3>3.1 Technology Stack Overview</h3>
+<p>JobCompass employs a modern, polyglot technology stack chosen specifically for the requirements of a microservices-based web application. Each technology was selected for a specific architectural concern, and this section explains not just <em>what</em> was chosen but <em>why</em>.</p>
+
+<h3>3.2 Frontend Technologies</h3>
+
+<table>
+<tr><th>Technology</th><th>Version</th><th>Purpose</th></tr>
+<tr><td>Angular</td><td>21.2.0</td><td>Core SPA framework with standalone components</td></tr>
+<tr><td>TypeScript</td><td>5.9.2</td><td>Static typing for JavaScript</td></tr>
+<tr><td>TailwindCSS</td><td>4.1.12</td><td>Utility-first CSS framework for rapid UI development</td></tr>
+<tr><td>Lucide Angular</td><td>1.0.0</td><td>Modern icon library (SVG-based)</td></tr>
+<tr><td>Chart.js</td><td>4.5.1</td><td>Data visualization (referenced in package.json)</td></tr>
+<tr><td>RxJS</td><td>7.8.x</td><td>Reactive programming for HTTP calls and event handling</td></tr>
+</table>
+
+<p><strong>Why Angular 21?</strong> Angular 21 introduced fully stable standalone components, eliminating the need for NgModules. This is significant for JobCompass because every component in the application — from <code>LoginComponent</code> to <code>DashboardComponent</code> — is declared as <code>standalone: true</code>. This reduces boilerplate, simplifies dependency management, and enables more granular lazy loading. The application's <code>App</code> root component is just 10 lines of code:</p>
+
+<pre><code><span class="keyword">@Component</span>({
+  selector: <span class="string">'app-root'</span>,
+  imports: [RouterOutlet],
+  template: <span class="string">`&lt;router-outlet /&gt;`</span>
+})
+<span class="keyword">export class</span> App {}</code></pre>
+
+<p><strong>Why TailwindCSS 4?</strong> TailwindCSS 4 is integrated via PostCSS (as seen in <code>devDependencies</code>: <code>@tailwindcss/postcss</code> and <code>postcss</code>). It provides utility classes directly in component templates, eliminating the need for separate CSS files for most components. Every component in JobCompass uses Tailwind classes inline — for example, the dashboard uses classes like <code>bg-white rounded-xl border border-gray-100 p-5</code> for card styling. This approach trades CSS file complexity for template-level styling control.</p>
+
+<h3>3.3 Backend Technologies</h3>
+
+<table>
+<tr><th>Technology</th><th>Purpose</th></tr>
+<tr><td>Java 17</td><td>Primary backend language (LTS release)</td></tr>
+<tr><td>Spring Boot 3.x</td><td>Microservice framework with auto-configuration</td></tr>
+<tr><td>Spring Cloud Gateway</td><td>Reactive API gateway (WebFlux-based)</td></tr>
+<tr><td>Spring Cloud Eureka</td><td>Service discovery and registry</td></tr>
+<tr><td>Spring Cloud Config</td><td>Centralized configuration management (Git-backed)</td></tr>
+<tr><td>Spring Data JPA</td><td>Database access abstraction with Hibernate ORM</td></tr>
+<tr><td>Spring AMQP</td><td>RabbitMQ integration for event-driven messaging</td></tr>
+<tr><td>Spring Security</td><td>Authentication framework (configured for stateless JWT)</td></tr>
+<tr><td>OpenFeign</td><td>Declarative HTTP client for inter-service communication</td></tr>
+<tr><td>MapStruct</td><td>Compile-time DTO-to-entity mapper generation</td></tr>
+<tr><td>SpringDoc OpenAPI</td><td>Swagger UI and API documentation generation</td></tr>
+<tr><td>JJWT</td><td>JSON Web Token creation and validation</td></tr>
+<tr><td>BCrypt</td><td>Password hashing algorithm</td></tr>
+</table>
+
+<p><strong>Why Spring Cloud Gateway over Zuul or Nginx?</strong> Spring Cloud Gateway is built on Project Reactor and WebFlux, making it fully non-blocking and reactive. This is critical for an API gateway that must handle many concurrent connections efficiently. The gateway's <code>JwtAuthFilter</code> implements the <code>GlobalFilter</code> interface, which operates on reactive <code>ServerWebExchange</code> objects and returns <code>Mono&lt;Void&gt;</code>. This means JWT validation, role extraction, and header mutation all happen without blocking threads — a significant advantage over the deprecated Zuul 1.x gateway.</p>
+
+<h3>3.4 Data &amp; Infrastructure Technologies</h3>
+
+<table>
+<tr><th>Technology</th><th>Version</th><th>Purpose</th></tr>
+<tr><td>PostgreSQL</td><td>15</td><td>Primary relational database (6 instances, one per service)</td></tr>
+<tr><td>RabbitMQ</td><td>3 (management)</td><td>Message broker for event-driven communication</td></tr>
+<tr><td>Redis</td><td>7</td><td>In-memory cache (job-service, 10-minute TTL)</td></tr>
+<tr><td>Docker</td><td>—</td><td>Container runtime for all services</td></tr>
+<tr><td>Docker Compose</td><td>—</td><td>Multi-container orchestration (13+ containers)</td></tr>
+</table>
+
+<p><strong>Why PostgreSQL over MySQL?</strong> PostgreSQL provides superior support for complex queries, JSON data types, and ACID compliance. Each microservice has its own dedicated PostgreSQL database (e.g., <code>jobportal_user_db</code>, <code>jobportal_job_db</code>, <code>application_db</code>), enforcing the database-per-service pattern that prevents tight coupling at the data layer.</p>
+
+<p><strong>Why RabbitMQ over Kafka?</strong> RabbitMQ was chosen for its simplicity and routing flexibility. The system uses a single <strong>Topic Exchange</strong> (<code>jobportal.exchange</code>) with routing keys like <code>job.created</code>, <code>job.applied</code>, <code>job.closed</code>, and <code>resume.uploaded</code>. This pattern allows multiple queues to bind to the same routing key (e.g., both <code>notification-service</code> and <code>search-service</code> listen for <code>job.created</code> events). For the current throughput requirements of a job portal, RabbitMQ's message-level routing and durable queues are more appropriate than Kafka's log-based architecture.</p>
+
+<h3>3.5 Development &amp; Quality Tools</h3>
+
+<table>
+<tr><th>Tool</th><th>Purpose</th></tr>
+<tr><td>Maven</td><td>Backend build system (multi-module POM)</td></tr>
+<tr><td>npm</td><td>Frontend package manager (v11.11.0)</td></tr>
+<tr><td>Angular CLI</td><td>Frontend build and development server</td></tr>
+<tr><td>SonarCloud</td><td>Static code analysis (GitHub Actions integration)</td></tr>
+<tr><td>Vitest</td><td>Frontend testing framework (in devDependencies)</td></tr>
+<tr><td>Prettier</td><td>Code formatting (v3.8.1)</td></tr>
+<tr><td>Zipkin</td><td>Distributed tracing (configured in properties)</td></tr>
+<tr><td>ngrok</td><td>HTTPS tunneling for production frontend deployment</td></tr>
+</table>
+
+<h3>3.6 Port Allocation Map</h3>
+<p>Every service in the system is assigned a unique port, critical for both local development and Docker networking:</p>
+
+<table>
+<tr><th>Service</th><th>Port</th><th>Docker Host Name</th></tr>
+<tr><td>API Gateway</td><td>8080</td><td>api-gateway</td></tr>
+<tr><td>User Service</td><td>8081</td><td>user-service</td></tr>
+<tr><td>Job Service</td><td>8082</td><td>job-service</td></tr>
+<tr><td>Application Service</td><td>8083</td><td>application-service</td></tr>
+<tr><td>Resume Service</td><td>8084</td><td>resume-service</td></tr>
+<tr><td>Notification Service</td><td>8085</td><td>notification-service</td></tr>
+<tr><td>Search Service</td><td>8086</td><td>search-service</td></tr>
+<tr><td>Eureka Server</td><td>8761</td><td>eureka-server</td></tr>
+<tr><td>Config Server</td><td>8888</td><td>config-server</td></tr>
+<tr><td>PostgreSQL</td><td>5432</td><td>postgres</td></tr>
+<tr><td>RabbitMQ</td><td>5672 / 15672</td><td>rabbitmq</td></tr>
+<tr><td>Redis</td><td>6379</td><td>redis</td></tr>
+</table>
+
+<p>The Angular frontend runs on port <code>4200</code> during development (<code>ng serve</code>) and communicates with all backend services exclusively through the API gateway on port <code>8080</code>. In production, the frontend is deployed to Vercel and uses an ngrok tunnel URL (<code>https://dirtiness-monsieur-stingy.ngrok-free.dev</code>) as configured in <code>environment.prod.ts</code>.</p>
+
+
+<!-- ─── CHAPTER 4 ─────────────────────────────────────────────── -->
+<h2>Chapter 4: System Architecture</h2>
+
+<h3>4.1 High-Level Architecture</h3>
+<p>JobCompass follows a <strong>microservices architecture</strong> where the system is decomposed into independently deployable services, each responsible for a specific business capability. The services communicate through two primary mechanisms: <strong>synchronous REST APIs</strong> (via the API gateway) and <strong>asynchronous message queues</strong> (via RabbitMQ).</p>
+
+<div class="diagram">
+┌─────────────────────┐
+│   Angular Frontend   │  (Port 4200 / Vercel)
+│   Standalone SPA     │
+└──────────┬──────────┘
+           │ HTTP (Bearer JWT)
+           ▼
+┌─────────────────────┐
+│    API Gateway       │  (Port 8080)
+│  ┌───────────────┐   │
+│  │ JwtAuthFilter  │   │  ← Validates JWT, extracts role/email
+│  │ CORS Config    │   │  ← Allows frontend origin
+│  │ Route Config   │   │  ← Routes to downstream services
+│  └───────────────┘   │
+└──────────┬──────────┘
+           │ HTTP + X-User-Email + X-User-Role headers
+           ▼
+┌─────────────────────────────────────────────────────────┐
+│                  Business Services                       │
+│                                                         │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐   │
+│  │  User    │ │   Job    │ │   App    │ │ Resume   │   │
+│  │ Service  │ │ Service  │ │ Service  │ │ Service  │   │
+│  │  :8081   │ │  :8082   │ │  :8083   │ │  :8084   │   │
+│  └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘   │
+│       │            │            │            │          │
+│       ▼            ▼            ▼            ▼          │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐      │
+│  │user_db  │ │job_db   │ │app_db   │ │resume_db│      │
+│  └─────────┘ └─────────┘ └─────────┘ └─────────┘      │
+│                                                         │
+│  ┌──────────────┐  ┌──────────────┐                     │
+│  │ Notification  │  │   Search     │                     │
+│  │ Service :8085 │  │ Service :8086│                     │
+│  └──────┬───────┘  └──────┬───────┘                     │
+│         │                 │                              │
+│         ▼                 ▼                              │
+│    [Gmail SMTP]     [search_db]                         │
+└─────────────────────────────────────────────────────────┘
+           │                    ▲
+           ▼                    │
+┌─────────────────────┐  ┌──────────┐  ┌──────────┐
+│     RabbitMQ        │  │  Redis   │  │  Eureka  │
+│  jobportal.exchange │  │  Cache   │  │ Registry │
+│  (Topic Exchange)   │  │  :6379   │  │  :8761   │
+│     :5672           │  └──────────┘  └──────────┘
+└─────────────────────┘
+         ▲
+    Config Server :8888
+    (Git-backed properties)
+</div>
+
+<h3>4.2 Service Communication Patterns</h3>
+
+<h4>4.2.1 Synchronous Communication (REST)</h4>
+<p>The primary communication path is: <strong>Frontend → API Gateway → Target Service</strong>. The frontend never calls a microservice directly. All requests pass through the gateway on port 8080, which performs JWT validation and routes to the correct service based on URL path prefixes defined in <code>GatewayRoutesConfig.java</code>:</p>
+
+<table>
+<tr><th>Path Prefix</th><th>Target Service</th><th>Internal URL</th></tr>
+<tr><td><code>/api/users/**</code></td><td>user-service</td><td>http://user-service:8081</td></tr>
+<tr><td><code>/api/jobs/**</code></td><td>job-service</td><td>http://job-service:8082</td></tr>
+<tr><td><code>/api/applications/**</code></td><td>application-service</td><td>http://application-service:8083</td></tr>
+<tr><td><code>/api/resumes/**</code></td><td>resume-service</td><td>http://resume-service:8084</td></tr>
+<tr><td><code>/search/**</code></td><td>search-service</td><td>http://search-service:8086</td></tr>
+<tr><td><code>/notifications/**</code></td><td>notification-service</td><td>http://notification-service:8085</td></tr>
+</table>
+
+<p>Additionally, the <strong>application-service</strong> uses OpenFeign to call the <strong>job-service</strong> directly for inter-service communication. This is defined in <code>JobClient.java</code> — a declarative Feign interface with a <code>JobClientFallbackFactory</code> for circuit breaker resilience.</p>
+
+<h4>4.2.2 Asynchronous Communication (RabbitMQ)</h4>
+<p>For operations that should not block the caller, JobCompass uses RabbitMQ event publishing. When a recruiter creates a job, the <code>job-service</code> saves the job to its database and then publishes a <code>job.created</code> event. This event is consumed by both the <code>search-service</code> (to index the job for searching) and the <code>notification-service</code> (to log or email notifications).</p>
+
+<table>
+<tr><th>Event</th><th>Publisher</th><th>Routing Key</th><th>Consumers</th></tr>
+<tr><td>Job Created</td><td>job-service</td><td><code>job.created</code></td><td>search-service, notification-service</td></tr>
+<tr><td>Job Closed</td><td>job-service</td><td><code>job.closed</code></td><td>search-service, notification-service</td></tr>
+<tr><td>Job Applied</td><td>application-service</td><td><code>job.applied</code></td><td>notification-service</td></tr>
+<tr><td>Resume Uploaded</td><td>resume-service</td><td><code>resume.uploaded</code></td><td>notification-service</td></tr>
+</table>
+
+<h3>4.3 Authentication Architecture</h3>
+<p>Authentication follows a <strong>stateless JWT model</strong> with a clear separation of concerns:</p>
+
+<ol>
+<li><strong>Token Generation</strong> (user-service): When a user logs in with valid credentials, the <code>JwtUtil</code> class in user-service generates a JWT containing the user's email as the <code>subject</code> and their role as a custom claim. The token is signed with HMAC-SHA256 using a shared secret key and has a 1-hour expiration.</li>
+<li><strong>Token Transmission</strong> (frontend): The Angular <code>authInterceptor</code> automatically attaches the token as a <code>Bearer</code> token in the <code>Authorization</code> header of every outgoing HTTP request.</li>
+<li><strong>Token Validation</strong> (API gateway): The <code>JwtAuthFilter</code> (a <code>GlobalFilter</code>) intercepts every request, extracts the token, validates the signature and expiration, and extracts the email and role claims.</li>
+<li><strong>Identity Propagation</strong> (gateway → services): After validation, the gateway mutates the request to add <code>X-User-Email</code> and <code>X-User-Role</code> headers before forwarding to the target service. Downstream services trust these headers implicitly.</li>
+<li><strong>Authorization Enforcement</strong> (services): Each service performs role-based checks in its service layer (e.g., "only JOB_SEEKER can apply") and ownership checks (e.g., "you can only withdraw your own application").</li>
+</ol>
+
+<div class="note"><strong>Key Design Decision:</strong> The JWT secret key (<code>mysecretkeymysecretkeymysecretkey</code>) is shared between the user-service (which generates tokens) and the api-gateway (which validates them). This is configured via Spring Cloud Config Server properties. Individual business services do NOT validate JWT tokens — they rely entirely on the gateway-injected headers.</div>
+
+<h3>4.4 CQRS-Lite Pattern</h3>
+<p>The search-service implements a simplified version of the Command Query Responsibility Segregation (CQRS) pattern. The <strong>job-service</strong> is the system of record — it owns the canonical job data. When a job is created or closed, an event is published to RabbitMQ. The <strong>search-service</strong> consumes these events and maintains its own read-optimized copy in a separate database (<code>job_search_db</code>). This allows the search service to have a different data model, different indexes, and different query capabilities than the job service.</p>
+
+<p>For example, the search-service's <code>Job</code> entity does not have fields like <code>createdBy</code> or <code>createdAt</code> that exist in the job-service. Instead, it focuses on searchable fields like <code>title</code>, <code>location</code>, <code>company</code>, <code>skills</code>, and <code>salary</code>. The search repository provides derived query methods such as <code>findByStatusAndTitleContainingIgnoreCaseAndLocationContainingIgnoreCase()</code> that would be unnecessarily complex on the job-service's database.</p>
+
+<!-- ─── CHAPTER 5 ─────────────────────────────────────────────── -->
+<h2>Chapter 5: Codebase Folder Structure</h2>
+
+<h3>5.1 Root Project Structure</h3>
+<p>The root directory is a Maven multi-module project defined in the parent <code>pom.xml</code>. Each subdirectory is an independent, self-contained microservice or infrastructure component:</p>
+
+<pre><code>jobcompass/                          <span class="comment"># Root project directory</span>
+├── pom.xml                          <span class="comment"># Parent POM — defines shared dependencies and modules</span>
+├── docker-compose.yml               <span class="comment"># Full system orchestration (331 lines, 13+ containers)</span>
+├── .github/workflows/sonar.yml      <span class="comment"># CI/CD pipeline for SonarCloud analysis</span>
+│
+├── jobportal-config/                <span class="comment"># Spring Cloud Config Server properties</span>
+│   ├── application.properties       <span class="comment"># Shared config (RabbitMQ, Eureka, Zipkin)</span>
+│   ├── api-gateway.properties       <span class="comment"># Gateway routes, Swagger aggregation, JWT secret</span>
+│   ├── user-service.properties      <span class="comment"># DB connection, JWT config, SpringDoc</span>
+│   ├── job-service.properties       <span class="comment"># DB connection, Redis config</span>
+│   ├── application-service.properties
+│   ├── resume-service.properties
+│   ├── notification-service.properties  <span class="comment"># Mail credentials (Gmail SMTP)</span>
+│   └── search-service.properties
+│
+├── eureka-server/                   <span class="comment"># Netflix Eureka service registry</span>
+├── config-server/                   <span class="comment"># Spring Cloud Config Server</span>
+├── api-gateway/                     <span class="comment"># Spring Cloud Gateway (reactive)</span>
+├── user-service/                    <span class="comment"># Auth, registration, profiles</span>
+├── job-service/                     <span class="comment"># Job CRUD, events, caching</span>
+├── application-service/             <span class="comment"># Job applications lifecycle</span>
+├── resume-service/                  <span class="comment"># Resume upload/download</span>
+├── notification-service/            <span class="comment"># Event consumers, email</span>
+├── search-service/                  <span class="comment"># Job indexing and search</span>
+├── analytics-service/               <span class="comment"># Referenced in Docker Compose</span>
+└── frontend/                        <span class="comment"># Angular 21 SPA</span></code></pre>
+
+<h3>5.2 Standard Backend Service Structure</h3>
+<p>Every backend business service follows an identical package structure. Understanding this pattern once enables understanding all six services. Using the user-service as the reference:</p>
+
+<pre><code>user-service/
+├── Dockerfile                       <span class="comment"># Multi-stage build (Java 17 Corretto)</span>
+├── pom.xml                          <span class="comment"># Service-specific Maven config</span>
+├── src/main/java/com/capg/userservice/
+│   ├── UserServiceApplication.java  <span class="comment"># @SpringBootApplication entry point</span>
+│   ├── controller/
+│   │   └── UserController.java      <span class="comment"># @RestController — HTTP endpoints</span>
+│   ├── service/
+│   │   ├── UserService.java         <span class="comment"># Service interface</span>
+│   │   └── impl/
+│   │       └── UserServiceImpl.java <span class="comment"># @Service — business logic</span>
+│   ├── repository/
+│   │   └── UserRepository.java      <span class="comment"># JpaRepository — data access</span>
+│   ├── entity/
+│   │   ├── User.java                <span class="comment"># @Entity — JPA entity</span>
+│   │   └── Role.java                <span class="comment"># Enum: JOB_SEEKER, RECRUITER, ADMIN</span>
+│   ├── dto/
+│   │   ├── request/                 <span class="comment"># Incoming request DTOs with validation</span>
+│   │   └── response/               <span class="comment"># Outgoing response DTOs</span>
+│   ├── mapper/
+│   │   └── UserMapper.java          <span class="comment"># @Mapper — MapStruct entity↔DTO</span>
+│   ├── exception/
+│   │   ├── GlobalExceptionHandler.java  <span class="comment"># @RestControllerAdvice</span>
+│   │   ├── ErrorResponse.java       <span class="comment"># Standard error DTO</span>
+│   │   └── ...Exception.java        <span class="comment"># Custom business exceptions</span>
+│   ├── config/
+│   │   └── SecurityConfig.java      <span class="comment"># Spring Security configuration</span>
+│   └── util/
+│       └── JwtUtil.java             <span class="comment"># JWT generation and validation</span>
+├── src/main/resources/
+│   ├── application.properties       <span class="comment"># Bootstrap config (config server URI)</span>
+│   └── logback-spring.xml           <span class="comment"># Logging configuration</span>
+└── src/test/java/                   <span class="comment"># Unit and integration tests</span></code></pre>
+
+<div class="note"><strong>Pattern Recognition:</strong> This same 10-layer structure (controller → service interface → serviceImpl → repository → entity → DTO → mapper → exception → config → util) is replicated across all six business services. The only variations are: (a) services that publish events add <code>RabbitMQConfig.java</code> in config/, (b) services that consume events add a <code>consumer/</code> package, and (c) the job-service adds <code>RedisConfig.java</code> for caching.</div>
+
+<h3>5.3 Frontend Project Structure</h3>
+<pre><code>frontend/
+├── package.json                     <span class="comment"># Dependencies: Angular 21, TailwindCSS 4, Lucide</span>
+├── tsconfig.json
+├── angular.json
+├── src/
+│   ├── index.html                   <span class="comment"># SPA entry point</span>
+│   ├── main.ts                      <span class="comment"># bootstrapApplication(App, appConfig)</span>
+│   ├── styles.css                   <span class="comment"># Global styles + Tailwind imports</span>
+│   ├── environments/
+│   │   ├── environment.ts           <span class="comment"># Dev: apiUrl = 'http://localhost:8080'</span>
+│   │   └── environment.prod.ts      <span class="comment"># Prod: apiUrl = ngrok tunnel</span>
+│   └── app/
+│       ├── app.ts                   <span class="comment"># Root component (10 lines)</span>
+│       ├── app.routes.ts            <span class="comment"># All route definitions</span>
+│       ├── app.config.ts            <span class="comment"># Provider setup</span>
+│       ├── core/                    <span class="comment"># Singleton services, guards, interceptors</span>
+│       │   ├── services/
+│       │   │   ├── auth.service.ts  <span class="comment"># Token CRUD, role/email extraction</span>
+│       │   │   └── theme.service.ts <span class="comment"># Dark mode toggle</span>
+│       │   ├── guards/
+│       │   │   ├── auth.guard.ts    <span class="comment"># CanActivateFn — login check</span>
+│       │   │   └── role.guard.ts    <span class="comment"># Factory guard — role check</span>
+│       │   └── interceptors/
+│       │       └── auth.interceptor.ts  <span class="comment"># Adds Bearer token to requests</span>
+│       ├── features/                <span class="comment"># Feature-based modules</span>
+│       │   ├── auth/                <span class="comment"># Login, Register, Change Password</span>
+│       │   ├── job-seeker/          <span class="comment"># All seeker pages + services</span>
+│       │   ├── recruiter/           <span class="comment"># All recruiter pages + services</span>
+│       │   ├── landing/             <span class="comment"># Public landing page</span>
+│       │   └── legal/               <span class="comment"># About, Careers, Privacy, Terms, Help</span>
+│       └── shared/                  <span class="comment"># Reusable UI components</span>
+│           └── components/
+│               ├── navbar/          <span class="comment"># Role-aware navigation bar</span>
+│               ├── footer/          <span class="comment"># Brand footer with legal links</span>
+│               └── confirm-modal/   <span class="comment"># Reusable confirmation dialog</span></code></pre>
+
+<!-- ─── CHAPTER 6 ─────────────────────────────────────────────── -->
+<h2>Chapter 6: Angular Fundamentals Used in This Project</h2>
+
+<h3>6.1 Standalone Components</h3>
+<p>Angular 21 enables components to declare their own dependencies without NgModules. Every component in JobCompass uses this pattern:</p>
+<pre><code><span class="keyword">@Component</span>({
+  selector: <span class="string">'app-dashboard'</span>,
+  <span class="keyword">standalone: true</span>,
+  imports: [CommonModule, FormsModule, NavbarComponent, FooterComponent],
+  template: <span class="string">`...`</span>
+})
+<span class="keyword">export class</span> DashboardComponent <span class="keyword">implements</span> OnInit { ... }</code></pre>
+<p>The <code>imports</code> array replaces what would traditionally be in an NgModule's <code>declarations</code> and <code>imports</code>. Each component is fully self-contained — it declares exactly which Angular modules (<code>CommonModule</code> for <code>*ngIf</code>/<code>*ngFor</code>, <code>FormsModule</code> for <code>[(ngModel)]</code>) and which sibling components (<code>NavbarComponent</code>, <code>FooterComponent</code>) it needs.</p>
+
+<h3>6.2 Functional Guards</h3>
+<p>JobCompass uses Angular's modern functional guard pattern instead of class-based guards. The <code>authGuard</code> is a <code>CanActivateFn</code> — a simple function:</p>
+<pre><code><span class="keyword">export const</span> authGuard: CanActivateFn = () => {
+  <span class="keyword">const</span> authService = inject(AuthService);
+  <span class="keyword">const</span> router = inject(Router);
+  <span class="keyword">if</span> (authService.isLoggedIn()) <span class="keyword">return true</span>;
+  router.navigate([<span class="string">'/login'</span>]);
+  <span class="keyword">return false</span>;
+};</code></pre>
+<p>The <code>roleGuard</code> is a <strong>guard factory</strong> — a function that returns a <code>CanActivateFn</code>, allowing parameterized role checks:</p>
+<pre><code><span class="keyword">export const</span> roleGuard = (allowedRoles: string[]): CanActivateFn => {
+  <span class="keyword">return</span> () => {
+    <span class="keyword">const</span> role = inject(AuthService).getRole();
+    <span class="keyword">if</span> (allowedRoles.includes(role)) <span class="keyword">return true</span>;
+    inject(AuthService).redirectByRole();
+    <span class="keyword">return false</span>;
+  };
+};</code></pre>
+<p>Routes use this as: <code>canActivate: [authGuard, roleGuard(['JOB_SEEKER'])]</code></p>
+
+<h3>6.3 HTTP Interceptors (Functional)</h3>
+<p>The <code>authInterceptor</code> is registered as a functional <code>HttpInterceptorFn</code> in <code>app.config.ts</code> via <code>provideHttpClient(withInterceptors([authInterceptor]))</code>. It intercepts every outgoing HTTP request and adds two headers:</p>
+<ul>
+<li><code>Authorization: Bearer &lt;token&gt;</code> — for JWT authentication</li>
+<li><code>ngrok-skip-browser-warning: true</code> — to bypass ngrok's browser interstitial page in production</li>
+</ul>
+
+<h3>6.4 Lazy Loading with loadComponent()</h3>
+<p>Every route in <code>app.routes.ts</code> uses dynamic <code>import()</code> syntax for code splitting:</p>
+<pre><code>{
+  path: <span class="string">'recruiter/dashboard'</span>,
+  canActivate: [authGuard, roleGuard([<span class="string">'RECRUITER'</span>])],
+  loadComponent: () => import(<span class="string">'./features/recruiter/components/dashboard/dashboard.component'</span>)
+    .then(m => m.DashboardComponent)
+}</code></pre>
+<p>This means the <code>DashboardComponent</code>'s JavaScript bundle is only downloaded when a recruiter navigates to <code>/recruiter/dashboard</code>. Job seeker components are never loaded for recruiters, and vice versa. This significantly reduces the initial bundle size.</p>
+
+<h3>6.5 Dependency Injection (providedIn: 'root')</h3>
+<p>All services in JobCompass use tree-shakable providers with <code>@Injectable({ providedIn: 'root' })</code>. This means each service is a singleton automatically registered at the application root without needing to be declared in any module's <code>providers</code> array. The Angular compiler can also tree-shake unused services.</p>
+
+<h3>6.6 Reactive HTTP with RxJS</h3>
+<p>All API calls return <code>Observable&lt;any&gt;</code> and are consumed with <code>.subscribe()</code> in components. Notable RxJS usage includes:</p>
+<ul>
+<li><code>forkJoin()</code> in <code>MyApplicationsComponent</code> — fetches job details for multiple applications in parallel</li>
+<li><code>switchMap()</code> in <code>ResumeService.updateMe()</code> — chains two HTTP calls: first GET the user, then PUT the update</li>
+<li><code>catchError()</code> with fallback in <code>MyApplicationsComponent</code> — tries search-service first, falls back to job-service</li>
+</ul>
+
+<h3>6.7 Manual Change Detection</h3>
+<p>Nearly every component in JobCompass injects <code>ChangeDetectorRef</code> and calls <code>this.cdr.detectChanges()</code> after asynchronous operations. This is because data changes inside <code>subscribe()</code> callbacks may not automatically trigger Angular's change detection cycle, especially in components with <code>OnPush</code> strategy or deep callback nesting. While Angular's default change detection would usually handle this, the explicit calls ensure UI consistency across all scenarios.</p>
+
+<h3>6.8 Environment-Based Configuration</h3>
+<p>The application uses Angular's environment files to switch between development and production API endpoints:</p>
+<pre><code><span class="comment">// environment.ts (development)</span>
+<span class="keyword">export const</span> environment = {
+  production: <span class="keyword">false</span>,
+  apiUrl: <span class="string">'http://localhost:8080'</span>
+};
+
+<span class="comment">// environment.prod.ts (production)</span>
+<span class="keyword">export const</span> environment = {
+  production: <span class="keyword">true</span>,
+  apiUrl: <span class="string">'https://dirtiness-monsieur-stingy.ngrok-free.dev'</span>
+};</code></pre>
+<p>Every service class references <code>environment.apiUrl</code> as <code>private base = environment.apiUrl</code>, ensuring a single point of change when switching deployment targets.</p>
+
+</body>
+</html>

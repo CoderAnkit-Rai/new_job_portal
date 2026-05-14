@@ -73,7 +73,7 @@ export class AuthService {
         next: (res) => { this.cachedName = res.name || ''; resolve(this.cachedName || this.getEmail()); },
         error: () => resolve(this.getEmail())
       });
-    });
+    }); 
   }
 
   redirectByRole(): void {

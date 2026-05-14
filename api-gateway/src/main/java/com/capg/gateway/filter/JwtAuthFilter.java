@@ -146,12 +146,6 @@ public class JwtAuthFilter implements GlobalFilter {
             return exchange.getResponse().setComplete();
         }
 
-        // JOB_SEEKER and RECRUITER → AI endpoints
-        if (path.startsWith("/api/ai") && !role.equals("JOB_SEEKER") && !role.equals("RECRUITER")) {
-            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-            return exchange.getResponse().setComplete();
-        }
-
         //  ADMIN only endpoints (optional future use)
         if (path.startsWith("/api/admin") && !role.equals("ADMIN")) {
             exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);

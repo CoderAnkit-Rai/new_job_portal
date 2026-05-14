@@ -60,7 +60,7 @@ services:
   # ============================================================
 
   eureka-server:
-    image: kkeshavv/eureka-server:latest
+    build: ./eureka-server
     container_name: eureka-server
     ports:
       - "8761:8761"
@@ -74,7 +74,7 @@ services:
       start_period: 60s
 
   config-server:
-    image: kkeshavv/config-server:latest
+    build: ./config-server
     container_name: config-server
     ports:
       - "8888:8888"
@@ -98,7 +98,7 @@ services:
   # ============================================================
 
   user-service:
-    image: kkeshavv/user-service:latest
+    build: ./user-service
     container_name: user-service
     ports:
       - "8081:8081"
@@ -106,7 +106,6 @@ services:
       SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
       SPRING_CLOUD_CONFIG_FAILFAST: "false"
       SPRING_PROFILES_ACTIVE: docker
-      CONFIG_SERVER_URL: http://config-server:8888
       SERVER_PORT: 8081
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/jobportal_user_db
       SPRING_DATASOURCE_USERNAME: postgres
@@ -129,7 +128,7 @@ services:
       - jobportal-network
 
   job-service:
-    image: kkeshavv/job-service:latest
+    build: ./job-service
     container_name: job-service
     ports:
       - "8082:8082"
@@ -137,7 +136,6 @@ services:
       SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
       SPRING_CLOUD_CONFIG_FAILFAST: "false"
       SPRING_PROFILES_ACTIVE: docker
-      CONFIG_SERVER_URL: http://config-server:8888
       SERVER_PORT: 8082
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/jobportal_job_db
       SPRING_DATASOURCE_USERNAME: postgres
@@ -168,7 +166,7 @@ services:
       - jobportal-network
 
   application-service:
-    image: kkeshavv/application-service:latest
+    build: ./application-service
     container_name: application-service
     ports:
       - "8083:8083"
@@ -176,7 +174,6 @@ services:
       SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
       SPRING_CLOUD_CONFIG_FAILFAST: "false"
       SPRING_PROFILES_ACTIVE: docker
-      CONFIG_SERVER_URL: http://config-server:8888
       SERVER_PORT: 8083
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/application_db
       SPRING_DATASOURCE_USERNAME: postgres
@@ -203,7 +200,7 @@ services:
       - jobportal-network
 
   resume-service:
-    image: kkeshavv/resume-service:latest
+    build: ./resume-service
     container_name: resume-service
     ports:
       - "8084:8084"
@@ -213,7 +210,6 @@ services:
       SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
       SPRING_CLOUD_CONFIG_FAILFAST: "false"
       SPRING_PROFILES_ACTIVE: docker
-      CONFIG_SERVER_URL: http://config-server:8888
       SERVER_PORT: 8084
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/jobportal_resume
       SPRING_DATASOURCE_USERNAME: postgres
@@ -243,7 +239,7 @@ services:
       - jobportal-network
 
   notification-service:
-    image: kkeshavv/notification-service:latest
+    build: ./notification-service
     container_name: notification-service
     ports:
       - "8085:8085"
@@ -251,7 +247,6 @@ services:
       SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
       SPRING_CLOUD_CONFIG_FAILFAST: "false"
       SPRING_PROFILES_ACTIVE: docker
-      CONFIG_SERVER_URL: http://config-server:8888
       SERVER_PORT: 8085
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
@@ -269,7 +264,7 @@ services:
       - jobportal-network
 
   search-service:
-    image: kkeshavv/search-service:latest
+    build: ./search-service
     container_name: search-service
     ports:
       - "8086:8086"
@@ -277,7 +272,6 @@ services:
       SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
       SPRING_CLOUD_CONFIG_FAILFAST: "false"
       SPRING_PROFILES_ACTIVE: docker
-      CONFIG_SERVER_URL: http://config-server:8888
       SERVER_PORT: 8086
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/job_search_db
       SPRING_DATASOURCE_USERNAME: postgres
@@ -302,65 +296,8 @@ services:
     networks:
       - jobportal-network
 
-  analytics-service:
-    image: kkeshavv/analytics-service:latest
-    container_name: analytics-service
-    ports:
-      - "8087:8087"
-    environment:
-      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
-      SPRING_CLOUD_CONFIG_FAILFAST: "false"
-      SPRING_PROFILES_ACTIVE: docker
-      CONFIG_SERVER_URL: http://config-server:8888
-      SERVER_PORT: 8087
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/analytics_db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: "1230"
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_SHOW_SQL: "false"
-      SPRING_JPA_OPEN_IN_VIEW: "false"
-      SPRING_RABBITMQ_HOST: rabbitmq
-      SPRING_RABBITMQ_PORT: 5672
-      SPRING_RABBITMQ_USERNAME: guest
-      SPRING_RABBITMQ_PASSWORD: guest
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
-    depends_on:
-      postgres:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-      eureka-server:
-        condition: service_healthy
-      config-server:
-        condition: service_healthy
-    networks:
-      - jobportal-network
-
-  ai-service:
-    image: kkeshavv/ai-service:latest
-    container_name: ai-service
-    ports:
-      - "8089:8089"
-    environment:
-      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
-      SPRING_CLOUD_CONFIG_FAILFAST: "false"
-      SPRING_PROFILES_ACTIVE: docker
-      CONFIG_SERVER_URL: http://config-server:8888
-      SERVER_PORT: 8089
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
-      GEMINI_API_KEY: AIzaSyC4SUqlilk1qCrYlCubifQQWcdYedcr0g8
-      GEMINI_API_URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
-      RESUME_SERVICE_URL: http://resume-service:8084
-    depends_on:
-      eureka-server:
-        condition: service_healthy
-      config-server:
-        condition: service_healthy
-    networks:
-      - jobportal-network
-
   api-gateway:
-    image: kkeshavv/api-gateway:latest
+    build: ./api-gateway
     container_name: api-gateway
     ports:
       - "8080:8080"
@@ -368,7 +305,6 @@ services:
       SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
       SPRING_CLOUD_CONFIG_FAILFAST: "false"
       SPRING_PROFILES_ACTIVE: docker
-      CONFIG_SERVER_URL: http://config-server:8888
       SERVER_PORT: 8080
       JWT_SECRET: mysecretkeymysecretkeymysecretkey
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka

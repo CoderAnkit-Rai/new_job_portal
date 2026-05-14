@@ -9,55 +9,32 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String EXCHANGE          = "jobportal.exchange";
-    public static final String DLX               = "jobportal.dlx";
     public static final String JOB_CREATED_QUEUE = "job.created.search.queue";
     public static final String JOB_CLOSED_QUEUE  = "job.closed.search.queue";
 
-    private static final String X_DLX    = "x-dead-letter-exchange";
-    private static final String X_DLX_RK = "x-dead-letter-routing-key";
-
-    @Bean public TopicExchange jobportalExchange() { return new TopicExchange(EXCHANGE); }
-    @Bean public DirectExchange deadLetterExchange() { return new DirectExchange(DLX); }
-
-    // ── Main Queues ──────────────────────────────────────────────────────────
-
-    @Bean public Queue jobCreatedQueue() {
-        return QueueBuilder.durable(JOB_CREATED_QUEUE)
-                .withArgument(X_DLX, DLX)
-                .withArgument(X_DLX_RK, JOB_CREATED_QUEUE + ".dlq")
-                .build();
+    @Bean
+    public TopicExchange jobportalExchange() {
+        return new TopicExchange(EXCHANGE);
     }
 
-    @Bean public Queue jobClosedQueue() {
-        return QueueBuilder.durable(JOB_CLOSED_QUEUE)
-                .withArgument(X_DLX, DLX)
-                .withArgument(X_DLX_RK, JOB_CLOSED_QUEUE + ".dlq")
-                .build();
+    @Bean
+    public Queue jobCreatedQueue() {
+        return QueueBuilder.durable(JOB_CREATED_QUEUE).build();
     }
 
-    // ── DLQs ────────────────────────────────────────────────────────────────
+    @Bean
+    public Queue jobClosedQueue() {
+        return QueueBuilder.durable(JOB_CLOSED_QUEUE).build();
+    }
 
-    @Bean public Queue jobCreatedDlq() { return new Queue(JOB_CREATED_QUEUE + ".dlq"); }
-    @Bean public Queue jobClosedDlq()  { return new Queue(JOB_CLOSED_QUEUE + ".dlq"); }
-
-    // ── Main Bindings ────────────────────────────────────────────────────────
-
-    @Bean public Binding jobCreatedBinding() {
+    @Bean
+    public Binding jobCreatedBinding() {
         return BindingBuilder.bind(jobCreatedQueue()).to(jobportalExchange()).with("job.created");
     }
 
-    @Bean public Binding jobClosedBinding() {
+    @Bean
+    public Binding jobClosedBinding() {
         return BindingBuilder.bind(jobClosedQueue()).to(jobportalExchange()).with("job.closed");
-    }
-
-    // ── DLQ Bindings ─────────────────────────────────────────────────────────
-
-    @Bean public Binding jobCreatedDlqBinding() {
-        return BindingBuilder.bind(jobCreatedDlq()).to(deadLetterExchange()).with(JOB_CREATED_QUEUE + ".dlq");
-    }
-
-    @Bean public Binding jobClosedDlqBinding() {
-        return BindingBuilder.bind(jobClosedDlq()).to(deadLetterExchange()).with(JOB_CLOSED_QUEUE + ".dlq");
     }
 
     @Bean

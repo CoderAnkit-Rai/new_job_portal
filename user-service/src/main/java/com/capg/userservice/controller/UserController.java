@@ -43,7 +43,7 @@ public class UserController {
         return ResponseEntity.ok(Map.of("token", token));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") 
     public ResponseEntity<UserResponse> getUser(
             @PathVariable Long id,
             @Parameter(hidden = true) @RequestHeader("X-User-Email") String email,

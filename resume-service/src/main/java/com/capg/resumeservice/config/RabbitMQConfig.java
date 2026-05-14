@@ -9,53 +9,21 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String EXCHANGE   = "jobportal.exchange";
-    public static final String DLX        = "jobportal.dlx";
     public static final String RESUME_KEY = "resume.uploaded";
 
-    private static final String DLQ_ANALYTICS = "resume.upload.analytics.queue.dlq";
-    private static final String DLQ_NOTIFY    = "resume.upload.notify.queue.dlq";
-    private static final String X_DLX         = "x-dead-letter-exchange";
-    private static final String X_DLX_RK      = "x-dead-letter-routing-key";
-
-    @Bean public TopicExchange jobportalExchange() { return new TopicExchange(EXCHANGE); }
-    @Bean public DirectExchange deadLetterExchange() { return new DirectExchange(DLX); }
-
-    // ── Main Queues ──────────────────────────────────────────────────────────
-
-    @Bean public Queue resumeAnalyticsQueue() {
-        return QueueBuilder.durable("resume.upload.analytics.queue")
-                .withArgument(X_DLX, DLX)
-                .withArgument(X_DLX_RK, DLQ_ANALYTICS)
-                .build();
-    }
-    @Bean public Queue resumeNotifyQueue() {
-        return QueueBuilder.durable("resume.upload.notify.queue")
-                .withArgument(X_DLX, DLX)
-                .withArgument(X_DLX_RK, DLQ_NOTIFY)
-                .build();
+    @Bean
+    public TopicExchange jobportalExchange() {
+        return new TopicExchange(EXCHANGE);
     }
 
-    // ── DLQs ────────────────────────────────────────────────────────────────
-
-    @Bean public Queue resumeAnalyticsDlq() { return new Queue(DLQ_ANALYTICS); }
-    @Bean public Queue resumeNotifyDlq()    { return new Queue(DLQ_NOTIFY); }
-
-    // ── Main Bindings ────────────────────────────────────────────────────────
-
-    @Bean public Binding resumeAnalyticsBinding() {
-        return BindingBuilder.bind(resumeAnalyticsQueue()).to(jobportalExchange()).with(RESUME_KEY);
+    @Bean
+    public Queue resumeNotifyQueue() {
+        return QueueBuilder.durable("resume.upload.notify.queue").build();
     }
-    @Bean public Binding resumeNotifyBinding() {
+
+    @Bean
+    public Binding resumeNotifyBinding() {
         return BindingBuilder.bind(resumeNotifyQueue()).to(jobportalExchange()).with(RESUME_KEY);
-    }
-
-    // ── DLQ Bindings ─────────────────────────────────────────────────────────
-
-    @Bean public Binding resumeAnalyticsDlqBinding() {
-        return BindingBuilder.bind(resumeAnalyticsDlq()).to(deadLetterExchange()).with(DLQ_ANALYTICS);
-    }
-    @Bean public Binding resumeNotifyDlqBinding() {
-        return BindingBuilder.bind(resumeNotifyDlq()).to(deadLetterExchange()).with(DLQ_NOTIFY);
     }
 
     @Bean

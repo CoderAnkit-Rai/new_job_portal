@@ -129,10 +129,6 @@ const PAGES: Record<string, { title: string; icon: string; content: Section[] }>
         body: 'Log in as a Recruiter, go to "Post Job" in the navbar, fill in the job details, and click "Post Job". Your listing will be live immediately.'
       },
       {
-        heading: 'What is the AI Assistant?',
-        body: 'The AI chatbot (🧭 button at the bottom right) can answer questions about your applications, profile, available jobs, and more. It uses your real data to give personalized answers.'
-      },
-      {
         heading: 'How do I reset my password?',
         body: 'Go to your profile and click "Change Password". Enter your current password and your new password to update it.'
       },
