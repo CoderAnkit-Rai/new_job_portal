@@ -43,21 +43,6 @@ public class JwtUtil {
         return extractAllClaims(token).getSubject();
     }
 
-    public String extractRole(String token) {
-        return extractAllClaims(token).get("role", String.class);
-    }
-    
-    //  Validate Token
-    public boolean validateToken(String token, String email) {
-        String extractedEmail = extractEmail(token);
-        return extractedEmail.equals(email) && !isTokenExpired(token);
-    }
-
-    //  Check Expiry
-    private boolean isTokenExpired(String token) {
-        return extractAllClaims(token).getExpiration().before(new Date());
-    }
-
     //  Extract Claims
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()

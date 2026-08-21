@@ -4,7 +4,6 @@ import com.capg.notificationservice.config.RabbitMQConfig;
 import com.capg.notificationservice.dto.ApplicationEvent;
 import com.capg.notificationservice.dto.JobClosedEvent;
 import com.capg.notificationservice.dto.JobEvent;
-import com.capg.notificationservice.dto.ResumeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -28,10 +27,5 @@ public class NotificationConsumer {
     @RabbitListener(queues = RabbitMQConfig.JOB_CLOSED_QUEUE)
     public void handleJobClosed(JobClosedEvent event) {
         log.info("[Notification] Job closed jobId={} title={}", event.getJobId(), event.getTitle());
-    }
-
-    @RabbitListener(queues = RabbitMQConfig.RESUME_UPLOAD_QUEUE)
-    public void handleResumeUploaded(ResumeEvent event) {
-        log.info("[Notification] Resume uploaded userEmail={}", event.getUserEmail());
     }
 }

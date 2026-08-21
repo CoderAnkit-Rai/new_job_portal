@@ -24,15 +24,6 @@ public class Application {
     public Application() {
     }
 
-    public Application(UUID applicationId, Long jobId, String userEmail,
-                       ApplicationStatus status, LocalDateTime appliedAt) {
-        this.applicationId = applicationId;
-        this.jobId = jobId;
-        this.userEmail = userEmail;
-        this.status = status;
-        this.appliedAt = appliedAt;
-    }
-
     public UUID getApplicationId() {
         return applicationId;
     }

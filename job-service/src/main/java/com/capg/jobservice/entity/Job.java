@@ -41,21 +41,6 @@ public class Job {
     // Constructors
     public Job() {}
 
-    public Job(Long jobId, String title, String company, String location,
-    		 Double salary, String description, String status,
-               String createdBy, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.jobId = jobId;
-        this.title = title;
-        this.company = company;
-        this.location = location;
-        this.salary = salary;
-        this.description = description;
-        this.status = status;
-        this.createdBy = createdBy;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
     // Getters & Setters
 
     public Long getJobId() {

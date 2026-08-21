@@ -24,7 +24,6 @@ public class JwtAuthFilter implements GlobalFilter {
         // PUBLIC ENDPOINTS
         if (path.startsWith("/api/users/login") ||
             path.startsWith("/api/users/register") ||
-            path.startsWith("/api/resumes/download/") ||
             path.startsWith("/swagger-ui") ||
             path.startsWith("/v3/api-docs") ||
             path.contains("/v3/api-docs") ||
@@ -148,42 +147,6 @@ public class JwtAuthFilter implements GlobalFilter {
 
         //  ADMIN only endpoints (optional future use)
         if (path.startsWith("/api/admin") && !role.equals("ADMIN")) {
-            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-            return exchange.getResponse().setComplete();
-        }
-
-        // JOB_SEEKER only → upload resume (URL or file)
-        if (method.equals("POST")
-                && (path.equals("/api/resumes") || path.equals("/api/resumes/upload"))
-                && !role.equals("JOB_SEEKER")) {
-            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-            return exchange.getResponse().setComplete();
-        }
-
-        // JOB_SEEKER only → view own resumes
-        if (path.equals("/api/resumes/me") && method.equals("GET")
-                && !role.equals("JOB_SEEKER")) {
-            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-            return exchange.getResponse().setComplete();
-        }
-
-        // RECRUITER, ADMIN → view resumes by user email
-        if (path.matches("/api/resumes/user/.+") && method.equals("GET")
-                && !role.equals("RECRUITER") && !role.equals("ADMIN")) {
-            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-            return exchange.getResponse().setComplete();
-        }
-
-        // JOB_SEEKER only → delete own resume
-        if (path.matches("/api/resumes/\\d+") && method.equals("DELETE")
-                && !role.equals("JOB_SEEKER")) {
-            exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-            return exchange.getResponse().setComplete();
-        }
-
-        // JOB_SEEKER, RECRUITER, ADMIN → get resume by id
-        if (path.matches("/api/resumes/\\d+") && method.equals("GET")
-                && !role.equals("JOB_SEEKER") && !role.equals("RECRUITER") && !role.equals("ADMIN")) {
             exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
             return exchange.getResponse().setComplete();
         }

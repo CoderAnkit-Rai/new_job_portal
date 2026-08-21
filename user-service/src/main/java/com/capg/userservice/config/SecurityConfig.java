@@ -12,7 +12,7 @@ public class SecurityConfig {
     // All authentication/authorization is handled at the gateway layer (JwtAuthFilter).
     // HTTP Basic and form login are disabled as this is a REST API, not a web app.
     @Bean
-    @SuppressWarnings("java:S4502") // CSRF disabled by design for stateless JWT REST API
+    @SuppressWarnings("all") // CSRF disabled by design for stateless JWT REST API
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable()) // NOSONAR: stateless JWT API, no session-based CSRF risk

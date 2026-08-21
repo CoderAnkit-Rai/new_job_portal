@@ -8,11 +8,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String EXCHANGE            = "jobportal.exchange";
-    public static final String JOB_CREATED_QUEUE   = "job.created.notify.queue";
-    public static final String JOB_APPLIED_QUEUE   = "job.applied.notify.queue";
-    public static final String JOB_CLOSED_QUEUE    = "job.closed.notify.queue";
-    public static final String RESUME_UPLOAD_QUEUE = "resume.upload.notify.queue";
+    public static final String EXCHANGE          = "jobportal.exchange";
+    public static final String JOB_CREATED_QUEUE = "job.created.notify.queue";
+    public static final String JOB_APPLIED_QUEUE = "job.applied.notify.queue";
+    public static final String JOB_CLOSED_QUEUE  = "job.closed.notify.queue";
+    public static final String JOB_CREATED_KEY   = "job.created";
+    public static final String JOB_APPLIED_KEY   = "job.applied";
+    public static final String JOB_CLOSED_KEY    = "job.closed";
 
     @Bean
     public TopicExchange jobportalExchange() {
@@ -22,26 +24,20 @@ public class RabbitMQConfig {
     @Bean public Queue jobCreatedQueue()   { return QueueBuilder.durable(JOB_CREATED_QUEUE).build(); }
     @Bean public Queue jobAppliedQueue()   { return QueueBuilder.durable(JOB_APPLIED_QUEUE).build(); }
     @Bean public Queue jobClosedQueue()    { return QueueBuilder.durable(JOB_CLOSED_QUEUE).build(); }
-    @Bean public Queue resumeUploadQueue() { return QueueBuilder.durable(RESUME_UPLOAD_QUEUE).build(); }
 
     @Bean
     public Binding jobCreatedBinding() {
-        return BindingBuilder.bind(jobCreatedQueue()).to(jobportalExchange()).with("job.created");
+        return BindingBuilder.bind(jobCreatedQueue()).to(jobportalExchange()).with(JOB_CREATED_KEY);
     }
 
     @Bean
     public Binding jobAppliedBinding() {
-        return BindingBuilder.bind(jobAppliedQueue()).to(jobportalExchange()).with("job.applied");
+        return BindingBuilder.bind(jobAppliedQueue()).to(jobportalExchange()).with(JOB_APPLIED_KEY);
     }
 
     @Bean
     public Binding jobClosedBinding() {
-        return BindingBuilder.bind(jobClosedQueue()).to(jobportalExchange()).with("job.closed");
-    }
-
-    @Bean
-    public Binding resumeBinding() {
-        return BindingBuilder.bind(resumeUploadQueue()).to(jobportalExchange()).with("resume.uploaded");
+        return BindingBuilder.bind(jobClosedQueue()).to(jobportalExchange()).with(JOB_CLOSED_KEY);
     }
 
     @Bean

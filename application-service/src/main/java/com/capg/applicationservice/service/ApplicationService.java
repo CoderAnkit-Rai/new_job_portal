@@ -1,8 +1,7 @@
 package com.capg.applicationservice.service;
 
-import java.util.UUID;
-
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.capg.applicationservice.dto.request.ApplicationRequest;
 import com.capg.applicationservice.dto.response.ApplicationResponse;
@@ -15,7 +14,5 @@ public interface ApplicationService {
 
 	Page<ApplicationResponse> getApplicants(Long jobId, String role, int page, int size);
 
-	ApplicationResponse updateStatus(UUID applicationId, String status, String role);
-
-	void withdrawApplication(UUID applicationId, String email);
+	String uploadResume(MultipartFile file, String email);
 }

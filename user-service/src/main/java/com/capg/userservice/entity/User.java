@@ -26,18 +26,13 @@ public class User {
     @Column(nullable = false)
     private boolean active;
 
-    private String mobile;
-    private String skills;
-    private String headline;
-
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     // Constructors
     public User() {}
 
     public User(Long id, String name, String email, String password, Role role, boolean active,
-                LocalDateTime createdAt, LocalDateTime updatedAt) {
+                LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -45,7 +40,6 @@ public class User {
         this.role = role;
         this.active = active;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     // Getters and Setters
@@ -105,21 +99,4 @@ public class User {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public String getMobile() { return mobile; }
-    public void setMobile(String mobile) { this.mobile = mobile; }
-
-    public String getSkills() { return skills; }
-    public void setSkills(String skills) { this.skills = skills; }
-
-    public String getHeadline() { return headline; }
-    public void setHeadline(String headline) { this.headline = headline; }
 }

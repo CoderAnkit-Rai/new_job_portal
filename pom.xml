@@ -13,9 +13,9 @@
     <description>Job Portal - All Microservices</description>
 
     <properties>
-        <sonar.organization>kkeshavv</sonar.organization>
+        <sonar.organization>CoderAnkit-Rai</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectKey>kkeshavv_job-portal</sonar.projectKey>
+        <sonar.projectKey>CoderAnkit-Rai_job-portal</sonar.projectKey>
         <sonar.projectName>job-portal</sonar.projectName>
         <sonar.coverage.exclusions>
             **/config/SecurityConfig.java,
@@ -33,7 +33,6 @@
         <module>user-service</module>
         <module>job-service</module>
         <module>application-service</module>
-        <module>resume-service</module>
         <module>notification-service</module>
         <module>search-service</module>
         <module>analytics-service</module>
