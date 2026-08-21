@@ -37,3 +37,7 @@ resume-service/uploads/
 
 # Chat logs
 q-dev-chat-*.md
+
+# Node
+node_modules/
+package-lock.json
